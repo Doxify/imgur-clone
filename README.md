@@ -10,9 +10,9 @@ Please follow the instructions below and fill in the information requested when 
 
 |               | Information   |
 |:-------------:|:-------------:|
-| Student Name  | name-here     |
-| Student ID    | id-here       |
-| Student Email | email-here    |
+| Student Name  | Andrei Georgescu     |
+| Student ID    | 920776919       |
+| Student Email | ageorgescu@mail.sfsu.edu    |
 
 
 
