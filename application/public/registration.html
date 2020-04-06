@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imgur - Register</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <header>
+            <h2>Register</h2>
+            <p>Register for an account to access the site.</p>
+        </header>
+        <form id="register-form" method="post">
+            <!-- <label for="username-input">Username: </label> -->
+            <input
+                id="username-input" 
+                type="text"
+                placeholder="Username"
+                required><br/><br/>
+
+            <!-- <label for="email-input">Email: </label> -->
+            <input
+                id="email-input" 
+                type="email"
+                placeholder="Email Address"
+                required><br/><br/>
+
+            <!-- <label for="password-input">Password: </label> -->
+            <input
+                id="password-input" 
+                type="password"
+                placeholder="Password"
+                required><br/><br/>
+
+            <!-- <label for="password-confirm-input">Confirm Password: </label> -->
+            <input 
+                id="password-confirm-input" 
+                type="password"
+                placeholder="Confirm Password"
+                required><br/><br/>
+
+            <!-- <p>You must accept our terms & conditions.</p> -->
+            <a href="">Terms of Service & Privacy Rules</a> <br>
+            <input 
+                id="tos-confirm-input" 
+                type="radio" 
+                value="tos"
+                required>
+            <label for="tos-confirm-input">I agree to the TOS.</label><br/>
+
+            <!-- <p>Please confirm your age.</p> -->
+            <input 
+                id="age-confirm-input" 
+                type="radio" 
+                value="age"
+                required>
+            <label for="age-confirm-input">I am 13+ years of age.</label><br/><br/>
+
+            <button id="submit-button" type="submit">Register</button>
+        </form>
+    </div>
+</body>
+
+<!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>

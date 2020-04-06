@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imgur - Upload</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+</head>
+
+<body>
+    <div class="form-container">
+        <header>
+            <h1>Upload an Image</h1>
+            <h4>Upload an image to the website.</h4>
+        </header>
+        <form id="image-post-form" method="post">
+            <!-- <label for="title-input">Image Title: </label> -->
+            <input 
+                id="title-input" 
+                type="text"
+                placeholder="Title"
+                required><br/><br/>
+
+            <!-- <label for="description-input">Image Description: </label> -->
+            <input 
+                id="description-input" 
+                type="text"
+                placeholder="Description"
+                required
+                ><br/><br/>
+
+            <label for="image">Select Image: </label><br>
+            <input 
+                id="image" 
+                type="file" 
+                accept="image/*"
+                required><br/><br/>
+
+            <a href="">Acceptable Use Policy for uploading images.</a><br/>
+            <input 
+                id="policy-accept-input" 
+                type="radio" 
+                value="tos"
+                required>
+            <label for="policy-accept-input">I accept the Acceptable Use Policy.</label><br/><br/>
+            
+            <button id="submit-button" type="submit">Upload Image</button>
+        </form>
+    </div>
+</body>
+
+<!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>

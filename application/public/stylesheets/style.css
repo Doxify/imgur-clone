@@ -1,8 +1,80 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* General CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* color: #ffffff; */
 }
 
-a {
-  color: #00B7FF;
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    /* padding: 2rem;  */
+    background: #2e3035;
+}
+
+header {
+    /* padding: 5px; */
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-weight: 400;
+}
+
+header h4 {
+    font-weight: 300;
+}
+
+
+/* Form CSS */
+.form-container {
+    background: #eeeeee;
+    color: #000000;
+    border: 0.08rem solid #d0d0d0;
+    max-width: 400px;
+    width: 50%;
+    margin: 2rem auto;
+    padding: 1rem;
+    box-shadow: 0 0 20px 0 #000000;
+    position: relative;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    border: 1px solid #cccccc;
+    background: #ffffff;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+form button[type="submit"] {
+    width: 100%;
+    border: none;
+    background: #5c69ff;
+    color: #ffffff;
+    /* margin: 0 0 5px; */
+    padding: 10px;
+    /* font-size: 16px; */
+}
+
+form button[type="submit"]:hover {
+    background: #6b77fa;
+}
+
+
+/* Index Page */
+.header-card {
+    border-radius: 0 !important;
+    padding: 2.5rem;
+    color: white;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%); /* Generated from https://cssgradient.io/swatches/ */
+}
+
+
+/* General */
+.card-deck {
+    padding: 2rem 2rem 1rem 2rem;
 }

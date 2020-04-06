@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imgur - Home</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" fluid>
+        <a class="navbar-brand" href="index.html">Imgur</a>
+        <!-- Pages -->
+        <!-- <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul> -->
+        <!-- Search bar -->
+        <form class="form-inline my-2 my-lg-0" action="">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search for images" aria-label="Search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="search">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        <!-- User Links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="login.html">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="registration.html">
+                    <i class="far fa-user-circle"></i>
+                    Register
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Image Container -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Image Section -->
+            <div class="col-sm-12 col-lg-8 mb-2">
+                <div class="card bg-dark text-white">
+                    <img src="https://fakeimg.pl/800x400/?text=Image%20Placeholder&font=roboto" class="card-img-top" alt="Error getting image, please try again later.">
+                    <div class="card-body">
+                        <h3 class="card-title">Image Title</h3>
+                        <p class="card-text">This is the image's description.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Author Information / Statistics Section -->
+            <div class="col-sm-12 col-lg-4">
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5 class="card-text text-muted">Post Information</h5>
+                                <p class="card-text">
+                                    Uploaded by
+                                    <a href="#">AUTHOR NAME</a>
+                                    <br/>
+                                    Published on April 5th, 2020.
+                                </p>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h5 class="card-text text-muted">Statistics</h5>
+                                <div class="row text-left">
+                                    <!-- Upvote counter -->
+                                    <div class="col-sm-4">
+                                        <p class="card-text">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <small>100</small>
+                                        </p>
+                                    </div>
+                                    <!-- Comment Counter -->
+                                    <div class="col-sm-4">
+                                        <p class="card-text">
+                                            <i class="fas fa-comment"></i>
+                                            <small>34</small>
+                                        </p>
+                                    </div>
+                                    <!-- View Counter -->
+                                    <div class="col-sm-4">
+                                        <p class="card-text">
+                                            <i class="fas fa-eye"></i>
+                                            <small>934</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Comments Container-->
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-sm-12 col-lg-8">
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments (0)</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<!-- Bootstrap Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</html>
