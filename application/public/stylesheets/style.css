@@ -28,9 +28,9 @@ header h4 {
 
 /* Form CSS */
 .form-container {
-    background: #eeeeee;
-    color: #000000;
-    border: 0.08rem solid #d0d0d0;
+    background: #343a40;
+    color: #ffffff;
+    border: 0.08rem solid #2b3035;
     max-width: 400px;
     width: 50%;
     margin: 2rem auto;
@@ -55,9 +55,7 @@ form button[type="submit"] {
     border: none;
     background: #5c69ff;
     color: #ffffff;
-    /* margin: 0 0 5px; */
     padding: 10px;
-    /* font-size: 16px; */
 }
 
 form button[type="submit"]:hover {
@@ -77,4 +75,8 @@ form button[type="submit"]:hover {
 /* General */
 .card-deck {
     padding: 2rem 2rem 1rem 2rem;
+}
+
+.image-thumbnail-card:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }

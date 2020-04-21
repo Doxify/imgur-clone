@@ -15,38 +15,7 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" fluid>
-        <a class="navbar-brand" href="#">Imgur</a>
-        <!-- New Post Button -->
-        <ul class="navbar-nav mr-auto">
-            <button class="btn btn-success my-2 my-sm-0" type="upload">
-                <i class="fas fa-upload"></i>
-                New Post
-            </button>
-        </ul>
-        <!-- Search bar -->
-        <form class="form-inline my-2 my-lg-0" action="">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search for images" aria-label="Search">
-            <button class="btn btn-outline-primary my-2 my-sm-0" type="search">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
-        <!-- User Links -->
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="login.html">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign In
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="registration.html">
-                    <i class="far fa-user-circle"></i>
-                    Register
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <div id="navigation-bar"></div>
 
     <!-- Quote Section -->
     <div class="row">
@@ -62,7 +31,7 @@
     <!-- Images -->
     <div class="container">
         <div class="card-deck">
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -96,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -130,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -164,145 +133,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
-                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Image Title</h5>
-                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <!-- Upvote counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-arrow-up"></i>
-                                <small>100</small>
-                            </p>
-                        </div>
-                        <!-- Comment Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-comment"></i>
-                                <small>34</small>
-                            </p>
-                        </div>
-                        <!-- View Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-eye"></i>
-                                <small>934</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-deck">
-            <div class="card bg-dark text-white">
-                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Image Title</h5>
-                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <!-- Upvote counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-arrow-up"></i>
-                                <small>100</small>
-                            </p>
-                        </div>
-                        <!-- Comment Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-comment"></i>
-                                <small>34</small>
-                            </p>
-                        </div>
-                        <!-- View Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-eye"></i>
-                                <small>934</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card bg-dark text-white">
-                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Image Title</h5>
-                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <!-- Upvote counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-arrow-up"></i>
-                                <small>100</small>
-                            </p>
-                        </div>
-                        <!-- Comment Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-comment"></i>
-                                <small>34</small>
-                            </p>
-                        </div>
-                        <!-- View Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-eye"></i>
-                                <small>934</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card bg-dark text-white">
-                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h5 class="card-title">Image Title</h5>
-                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <!-- Upvote counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-arrow-up"></i>
-                                <small>100</small>
-                            </p>
-                        </div>
-                        <!-- Comment Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-comment"></i>
-                                <small>34</small>
-                            </p>
-                        </div>
-                        <!-- View Counter -->
-                        <div class="col-sm-4">
-                            <p class="card-text">
-                                <i class="fas fa-eye"></i>
-                                <small>934</small>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -338,7 +169,7 @@
             </div>
         </div>
         <div class="card-deck">
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -372,7 +203,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -406,7 +237,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -440,7 +271,145 @@
                     </div>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-dark text-white image-thumbnail-card">
+                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Image Title</h5>
+                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <!-- Upvote counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-arrow-up"></i>
+                                <small>100</small>
+                            </p>
+                        </div>
+                        <!-- Comment Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-comment"></i>
+                                <small>34</small>
+                            </p>
+                        </div>
+                        <!-- View Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-eye"></i>
+                                <small>934</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-deck">
+            <div class="card bg-dark text-white image-thumbnail-card">
+                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Image Title</h5>
+                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <!-- Upvote counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-arrow-up"></i>
+                                <small>100</small>
+                            </p>
+                        </div>
+                        <!-- Comment Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-comment"></i>
+                                <small>34</small>
+                            </p>
+                        </div>
+                        <!-- View Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-eye"></i>
+                                <small>934</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark text-white image-thumbnail-card">
+                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Image Title</h5>
+                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <!-- Upvote counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-arrow-up"></i>
+                                <small>100</small>
+                            </p>
+                        </div>
+                        <!-- Comment Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-comment"></i>
+                                <small>34</small>
+                            </p>
+                        </div>
+                        <!-- View Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-eye"></i>
+                                <small>934</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark text-white image-thumbnail-card">
+                <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title">Image Title</h5>
+                            <!-- <p class="card-text"><small class="text-muted">Uploaded on 04/05/2020</small></p> -->
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <!-- Upvote counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-arrow-up"></i>
+                                <small>100</small>
+                            </p>
+                        </div>
+                        <!-- Comment Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-comment"></i>
+                                <small>34</small>
+                            </p>
+                        </div>
+                        <!-- View Counter -->
+                        <div class="col-sm-4">
+                            <p class="card-text">
+                                <i class="fas fa-eye"></i>
+                                <small>934</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-dark text-white image-thumbnail-card">
                 <img src="https://fakeimg.pl/350x200/?text=Image Placeholder" class="card-img-top" alt="Image not found, please try again later.">
                 <div class="card-body">
                     <div class="row">
@@ -479,9 +448,16 @@
 
 </body>
 
-<!-- Bootstrap Scripts -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<!-- Bootstrap/Jquery Scripts -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Loading Navigation "Component" -->
+<script>
+    $.get('./components/navigation.html', (data) => {
+        $('#navigation-bar').replaceWith(data);
+    })
+</script>
 
 </html>

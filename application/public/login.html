@@ -14,22 +14,25 @@
     <div class="form-container">
         <header>
             <h2>Login</h2>
-            <p>Authenticate yourself to access the site.</p>
+            <p>Login to post images and comments!</p>
         </header>
-        <form id="login-form" method="post">
-            <!-- <label for="username-input">Username: </label> -->
+        <form id="login-form" action="/users/login" method="post" enctype="application/x-www-form-urlencoded">
             <input
-                id="username-input"
-                type="text" 
-                placeholder="Username"
+                id="email-input"
+                type="email"
+                name="email"
+                placeholder="Email Address"
                 required><br/><br/>
 
-            <!-- <label for="password-input">Password: </label> -->
             <input 
                 id="password-input" 
-                type="password" 
+                type="password"
+                name="password"
                 placeholder="Password"
                 required><br/><br/>
+
+                <div id="alert" class="alert " role="alert" hidden>
+                </div>
 
             <button id="submit-button" type="submit">Login</button>
         </form>
@@ -40,5 +43,17 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Handling feedback from the server -->
+<script>
+    let url = new URL(document.URL);
+    let params = new URLSearchParams(url.search);
+
+    if(params.has('error')) {
+        $("#alert").text(params.get('error'));
+        $("#alert").addClass("alert-danger");
+        $("#alert").removeAttr("hidden");
+    }
+</script>
 
 </html>

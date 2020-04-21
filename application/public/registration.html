@@ -14,38 +14,37 @@
     <div class="form-container">
         <header>
             <h2>Register</h2>
-            <p>Register for an account to access the site.</p>
+            <p>Create an account to post images and comments!</p>
         </header>
-        <form id="register-form" method="post">
-            <!-- <label for="username-input">Username: </label> -->
+
+        <form id="register-form" action="/users/create" method="post" enctype="application/x-www-form-urlencoded">
             <input
                 id="username-input" 
                 type="text"
+                name="username"
                 placeholder="Username"
                 required><br/><br/>
 
-            <!-- <label for="email-input">Email: </label> -->
             <input
                 id="email-input" 
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 required><br/><br/>
 
-            <!-- <label for="password-input">Password: </label> -->
             <input
                 id="password-input" 
                 type="password"
+                name="password"
                 placeholder="Password"
                 required><br/><br/>
 
-            <!-- <label for="password-confirm-input">Confirm Password: </label> -->
             <input 
-                id="password-confirm-input" 
+                id="password-confirm-input"
                 type="password"
                 placeholder="Confirm Password"
                 required><br/><br/>
 
-            <!-- <p>You must accept our terms & conditions.</p> -->
             <a href="">Terms of Service & Privacy Rules</a> <br>
             <input 
                 id="tos-confirm-input" 
@@ -54,13 +53,15 @@
                 required>
             <label for="tos-confirm-input">I agree to the TOS.</label><br/>
 
-            <!-- <p>Please confirm your age.</p> -->
             <input 
-                id="age-confirm-input" 
+                id="age-confirm-input"
                 type="radio" 
                 value="age"
                 required>
-            <label for="age-confirm-input">I am 13+ years of age.</label><br/><br/>
+            <label for="age-confirm-input">I am 13+ years of age.</label><br/>
+
+            <div id="alert" class="alert " role="alert" hidden>
+            </div>
 
             <button id="submit-button" type="submit">Register</button>
         </form>
@@ -71,5 +72,22 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Handling feedback from the server -->
+<script>
+    let url = new URL(document.URL);
+    let params = new URLSearchParams(url.search);
+
+    if(params.has('error')) {
+        $("#alert").text(params.get('error'));
+        $("#alert").addClass("alert-danger");
+        $("#alert").removeAttr("hidden");
+    } else if(params.has('success')) {
+        $("#alert").text("Accout successfully created, click here to login.");
+        $("#alert").addClass("alert-success");
+        $("#alert").removeAttr("hidden");
+    }
+</script>
+
 
 </html>
