@@ -4,37 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imgur - Login</title>
+    <title>Imgur - Register</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 </head>
 
 <body>
     <div class="form-container">
         <header>
-            <h2>Login</h2>
-            <p>Login to post images and comments!</p>
+            <h2>Register</h2>
+            <p>Create an account to post images and comments!</p>
         </header>
-        <form id="login-form" action="/users/login" method="post" enctype="application/x-www-form-urlencoded">
+
+        <form id="register-form" action="/users/create" method="POST" enctype="application/x-www-form-urlencoded">
             <input
-                id="email-input"
+                id="username-input" 
+                type="text"
+                name="username"
+                placeholder="Username"
+                required><br/><br/>
+
+            <input
+                id="email-input" 
                 type="email"
                 name="email"
                 placeholder="Email Address"
                 required><br/><br/>
 
-            <input 
+            <input
                 id="password-input" 
                 type="password"
                 name="password"
                 placeholder="Password"
                 required><br/><br/>
 
-                <div id="alert" class="alert " role="alert" hidden>
-                </div>
+            <input 
+                id="password-confirm-input"
+                type="password"
+                placeholder="Confirm Password"
+                required><br/><br/>
 
-            <button id="submit-button" type="submit">Login</button>
+            <a href="">Terms of Service & Privacy Rules</a> <br>
+            <input 
+                id="tos-confirm-input" 
+                type="radio" 
+                value="tos"
+                required>
+            <label for="tos-confirm-input">I agree to the TOS.</label><br/>
+
+            <input 
+                id="age-confirm-input"
+                type="radio" 
+                value="age"
+                required>
+            <label for="age-confirm-input">I am 13+ years of age.</label><br/>
+
+            <!-- <div id="alert" class="alert " role="alert" hidden>
+            </div> -->
+
+            <button id="submit-button" type="submit">Register</button>
         </form>
     </div>
 </body>
@@ -45,7 +74,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <!-- Handling feedback from the server -->
-<script>
+<!-- <script>
     let url = new URL(document.URL);
     let params = new URLSearchParams(url.search);
 
@@ -53,7 +82,12 @@
         $("#alert").text(params.get('error'));
         $("#alert").addClass("alert-danger");
         $("#alert").removeAttr("hidden");
+    } else if(params.has('success')) {
+        $("#alert").text("Accout successfully created, click here to login.");
+        $("#alert").addClass("alert-success");
+        $("#alert").removeAttr("hidden");
     }
-</script>
+</script> -->
+
 
 </html>

@@ -1,19 +1,36 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var express         = require('express');
+var path            = require('path');
+var cookieParser    = require('cookie-parser');
+var logger          = require('morgan');
+var bodyParser      = require('body-parser');
+var session         = require('express-session');
+var mysqlStore      = require('express-mysql-session')(session);
+var app             = express();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testRouter = require('./routes/dbtest');
+// Routes
+var indexRouter     = require('./routes/index');
+var usersRouter     = require('./routes/users');
+var testRouter      = require('./routes/dbtest');
 
-var app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Configuring sessions
+var sessionStore = new mysqlStore({ /* Using default options */}, require('./conf/database'));
+var sessionOptions = {
+    key: 'sessionID',
+    secret: 'Dakjuyjyhtgfeavb34L$gdfWDQ<A:D"W<:L',
+    store: sessionStore,
+    cookie: { secure: false, httpOnly: false, maxAge: 9000000 },
+    resave: false,
+    saveUnitialized: false
+};
+
+app.use(session(sessionOptions));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
