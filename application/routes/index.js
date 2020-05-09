@@ -21,4 +21,16 @@ router.get('/search', (req, res, next) => {
   res.sendFile('/search.html', { root: 'public/html' });
 });
 
+router.get('/image', (req, res, next) => {
+  res.sendFile('/image.html', { root: 'public/html' });
+});
+
+router.get('/profile', (req, res, next) => {
+  res.sendFile('/profile.html', { root: 'public/html' })
+});
+
+router.get('/terms', (req, res, next) => {
+  res.sendFile('/terms.html', { root: 'public/html' })
+})
+
 module.exports = router;

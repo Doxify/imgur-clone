@@ -8,34 +8,62 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+
+    <!-- Redirecting to '/' if user is already logged in -->
+    <script>
+        if(document.cookie.includes('csid')) {
+            document.location.replace('/');
+        }
+    </script>
 </head>
 
 <body>
-    <div class="form-container">
-        <header>
-            <h2>Login</h2>
-            <p>Login to post images and comments!</p>
-        </header>
-        <form id="login-form" action="/users/login" method="post" enctype="application/x-www-form-urlencoded">
-            <input
-                id="email-input"
-                type="text"
-                name="displayName"
-                placeholder="Username or Email Address"
-                required><br/><br/>
+    <a class="home-link" href="/">
+        <i class="fas fa-home"></i>
+    </a>
 
-            <input 
-                id="password-input" 
-                type="password"
-                name="password"
-                placeholder="Password"
-                required><br/><br/>
+    <div class="small-container">
+        <img 
+            src="../images/logo_dark.png" 
+            class="img-fluid"
+            alt="Logo Image"
+        >
+    </div>
 
-                <!-- <div id="alert" class="alert " role="alert" hidden>
-                </div> -->
-
-            <button id="submit-button" type="submit">Login</button>
-        </form>
+    <div class="small-container">
+        <div class="card bg-dark text-white">
+            <div class="card-body">
+                <form id="login-form" action="/users/login" method="post" enctype="application/x-www-form-urlencoded">
+                    <div class="form-group">
+                        <input 
+                            type="text" 
+                            id="displayNameInput" 
+                            class="form-control" 
+                            name="displayName" 
+                            placeholder="Username or Email Address"
+                            required
+                            >
+                    </div>
+                    <div class="form-group">
+                        <input 
+                            type="password" 
+                            id="passwordInput" 
+                            class="form-control" 
+                            name="password" 
+                            placeholder="Password"
+                            required
+                            >
+                    </div>
+                    <div class="float-right">
+                        <a href="/register" class="card-link">have no account?</a>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -43,17 +71,5 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-<!-- Handling feedback from the server -->
-<!-- <script>
-    let url = new URL(document.URL);
-    let params = new URLSearchParams(url.search);
-
-    if(params.has('error')) {
-        $("#alert").text(params.get('error'));
-        $("#alert").addClass("alert-danger");
-        $("#alert").removeAttr("hidden");
-    }
-</script> -->
 
 </html>

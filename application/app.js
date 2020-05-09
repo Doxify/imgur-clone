@@ -20,14 +20,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuring sessions
-var sessionStore = new mysqlStore({ /* Using default options */}, require('./conf/database'));
+var sessionStore = new mysqlStore({ /* Using default options */ }, require('./conf/database'));
 var sessionOptions = {
-    key: 'sessionID',
+    key: 'csid',
     secret: 'Dakjuyjyhtgfeavb34L$gdfWDQ<A:D"W<:L',
     store: sessionStore,
-    cookie: { secure: false, httpOnly: false, maxAge: 9000000 },
-    resave: false,
-    saveUnitialized: false
+    cookie: { 
+        secure: false, 
+        httpOnly: false, 
+        maxAge: 9000000, 
+        sameSite: true 
+    },
+    resave: true,
+    saveUninitialized: false,
 };
 
 app.use(session(sessionOptions));

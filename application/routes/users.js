@@ -66,42 +66,56 @@ router.post('/login', async (req, res, next) => {
     let email;
 
     db.query(validateSQL, [displayName, displayName])
-    .then(([result, fields]) => {
-        if(result && result.length == 0) {
-            // Email/Username not found in the database, throwing an error.
-            throw new UserError('User cold not be authenticated', '/login', 200);
-        }
+        .then(([result, fields]) => {
+            if(result && result.length == 0) {
+                // Email/Username not found in the database, throwing an error.
+                throw new UserError('User cold not be authenticated', '/login', 200);
+            }
 
-        let hash = result[0].password;
-        
-        userID = result[0].id;
-        email = result[0].email;
-        username = result[0].username;
+            var hash = result[0].password;
+            
+            userID = result[0].id;
+            email = result[0].email;
+            username = result[0].username;
 
-        return bcrypt.compare(hash, password);
-    })
-    .then((result) => {
-        if(!result) {
-            throw new UserError('User could not be authenticated', '/login', 200);
-        }
+            return bcrypt.compare(hash, password);
+        })
+        .then((result) => {
+            if(!result) {
+                throw new UserError('User could not be authenticated', '/login', 200);
+            }
 
-        // Creating the session
-        req.session.username = username;
-        req.session.email = email;
-        req.session.userID = userID;
+            // Creating the session
+            req.session.username = username;
+            req.session.email = email;
+            req.session.userID = userID;
+            
+            // Redirecting
+            res.redirect('/');
+        })
+        .catch((err) => {
+            if(err instanceof UserError) {
+                debug.errorPrint(err.getMessage());
+                res.status(err.getStatus());
+                res.redirect(err.getRedirectURL());
+            } else {
+                debug.errorPrint(err.message);
+                next(err);
+            }
+        })
+});
 
-        res.redirect('/');
-    })
-    .catch((err) => {
-        if(err instanceof UserError) {
-            debug.errorPrint(err.getMessage());
-            res.status(err.getStatus());
-            res.redirect(err.getRedirectURL());
-        } else {
-            debug.errorPrint(err.message);
+router.post('/logout', (req, res, next) => {
+    req.session.destroy((err) => {
+        if(err) {
+            debug.errorPrint('Failed to destroy session.');
             next(err);
+        } else {
+            debug.successPrint('Session successfully destroyed.');
+            res.clearCookie('csid');
+            res.redirect('/login');
         }
-    })
+    });
 });
 
 module.exports = router;

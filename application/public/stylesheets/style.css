@@ -9,7 +9,7 @@
 body {
     font-family: Helvetica, Arial, sans-serif;
     /* padding: 2rem;  */
-    background: #2e3035;
+    background: #191919;
 }
 
 header {
@@ -25,41 +25,57 @@ header h4 {
     font-weight: 300;
 }
 
+/* Overwriting Bootstrap Start */
+.bg-dark {
+    background: #282828 !important;
+}
 
-/* Form CSS */
-.form-container {
-    background: #343a40;
-    color: #ffffff;
-    border: 0.08rem solid #2b3035;
+.btn-primary {
+    background: #5c69ff;
+    border: 1px solid #6b77fa;
+}
+.btn-primary:hover {
+    background: #6b77fa;
+    border: 1px solid #5c69ff;
+}
+
+.btn-outline-primary {
+    color: #5c69ff;
+    border: 1px solid #6b77fa;
+}
+
+.btn-outline-primary:hover {
+    background: #6b77fa;
+    border: 1px solid #5c69ff;
+}
+
+.card-link {
+    color: #5c69ff;
+}
+.card-link:hover {
+    color: #6b77fa;
+}
+
+/* Overwriting Bootstrap Done */
+
+
+.home-link {
+    position: absolute;
+    color: #5c69ff !important;
+    top: 10px;
+    left: 10px;
+}
+
+
+.small-container {
     max-width: 400px;
     width: 50%;
     margin: 2rem auto;
-    padding: 1rem;
-    box-shadow: 0 0 20px 0 #000000;
-    position: relative;
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="text"],
-form input[type="password"] {
-    width: 100%;
-    border: 1px solid #cccccc;
-    background: #ffffff;
-    margin: 0 auto;
-    padding: 10px;
-}
-
-form button[type="submit"] {
-    width: 100%;
-    border: none;
-    background: #5c69ff;
-    color: #ffffff;
-    padding: 10px;
-}
-
-form button[type="submit"]:hover {
-    background: #6b77fa;
+.small-container img {
+    padding-top: 2rem;
+    width: 50%;
 }
 
 
