@@ -20,12 +20,47 @@ var storage = multer.diskStorage({
 });
 
 var uploader = multer({ storage: storage });
-// uploader.array
 
 router.post('/create', uploader.single('uploadImage'), (req, res, next) => {
-    console.log(req.body);
+    let fileUploaded = req.file.path;
+    let fileAsThumbnail = `thumbnail-${req.file.filename}`;
+    let thumbnailDestination = `${req.file.destination}/${fileAsThumbnail}`;
+    let title = req.body.title;
+    let description = req.body.description;
+    let fk_userid = req.session.userID;
+
+    // Resizes the image for thumbnail
+    sharp(fileUploaded)
+        .resize(200)
+        .toFile(thumbnailDestination)
+        .then(() => {
+            // Uploads into MySQL
+            let baseSQL = 'INSERT INTO posts (title, description, photopath, thumbnail, created, fk_userid) VALUE (?, ?, ?, ?, now(), ?)';
+            return db.execute(baseSQL, [title, description, fileUploaded, thumbnailDestination, fk_userid]);
+        })
+        .then(([result, field]) => {
+            if(result && result.affectedRows > 0) {
+                // Uploade Success
+                debug.successPrint('post was created.')
+                res.status(200).json({
+                    status: "OK",
+                    message: 'post was created',
+                    redirect: `/image/${req.file.filename.split('.')[0]}`
+                })
+            } else {
+                // Upload Failed
+                debug.errorPrint('post was not created.')
+                res.status(200).json({
+                    status: "OK",
+                    message: 'post was not created',
+                    redirect: '/postimage'
+                })
+            }
+        })
+        .catch((err) => {
+            next(err);
+        });
     console.log(req.file);
-    res.send('file uploaded');
 });
 
 module.exports = router;
