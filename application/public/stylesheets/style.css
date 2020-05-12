@@ -84,7 +84,9 @@ header h4 {
     border-radius: 0 !important;
     padding: 2.5rem;
     color: white;
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%); /* Generated from https://cssgradient.io/swatches/ */
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    border-bottom-left-radius: 50% 20%;
+    /* border-bottom-right-radius: 50% 20%; */
 }
 
 

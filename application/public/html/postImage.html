@@ -28,7 +28,7 @@
     <div class="small-container">
         <div class="card bg-dark text-white">
             <div class="card-body">
-                <form action="">
+                <form action="/posts/create" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <input 
                             type="text" 
@@ -54,8 +54,9 @@
                         <input 
                             type="file"
                             accept="image/*" 
-                            class="form-control" 
-                            id="imageFile" 
+                            class="form-control"
+                            name="uploadImage"
+                            id="imageFile"
                             required
                             >
                     </div>

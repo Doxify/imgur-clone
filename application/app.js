@@ -10,16 +10,16 @@ var app             = express();
 // Routes
 var indexRouter     = require('./routes/index');
 var usersRouter     = require('./routes/users');
-var testRouter      = require('./routes/dbtest');
+var postsRouter     = require('./routes/posts');
 
-
+// Express settings
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuring sessions
+// Sessions
 var sessionStore = new mysqlStore({ /* Using default options */ }, require('./conf/database'));
 var sessionOptions = {
     key: 'csid',
@@ -39,7 +39,7 @@ app.use(session(sessionOptions));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/dbTest', testRouter);
+app.use('/posts', postsRouter);
 
 app.use((err, req, res, next) => {
     res.status(500);
