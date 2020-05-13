@@ -70,7 +70,7 @@
                                     <div class="col-sm-4">
                                         <p class="card-text">
                                             <i class="fas fa-eye"></i>
-                                            <small>934</small>
+                                            <small id="post-views"></small>
                                         </p>
                                     </div>
                                 </div>
@@ -130,6 +130,7 @@
                     let _postDescription = document.getElementById('post-description');
                     let _postAuthor = document.getElementById('post-author');
                     let _postDate = document.getElementById('post-date');
+                    let _postViews = document.getElementById('post-views');
                     let date = new Date(data.created);
 
                     _postPhoto.setAttribute('src', data.location);
@@ -138,6 +139,7 @@
                     _postAuthor.innerText = data.author;
                     _postAuthor.setAttribute('href', `/profile/${data.author}`)
                     _postDate.innerText = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+                    _postViews.innerText = data.views;
 
                     _imageContainer.removeAttribute('hidden');
                 } else {

@@ -51,19 +51,29 @@ router.get('/get/:name', async (req, res, next) => {
 
     post.getPost(fileName)
         .then((data) => {
-            console.log(data);
             response.status = 'OK';
             response.title = data.title;
             response.description = data.description;
             response.location = data.photopath.split('public/')[1];
             response.created = data.created;
-            return post.getAuthor();
+            response.id = data.id;
+            response.fk_userid = data.fk_userid;
+            
+            // Increment the amount of times this post has been viewed.
+            return post.incrementViews(response.id);
+        })
+        .then((viewCount) => {
+            response.views = viewCount;
+            // Get the username of the post's author.
+            return post.getAuthor(response.fk_userid); // TODO: Make this use the user model.
         })
         .then((data) => {
             response.author = data.username;
+            console.log(response);
             return res.status(200).send(response);
         })
         .catch((err) => {
+            console.log(err.message);
             next(err);
         });
 })

@@ -23,15 +23,14 @@ class Post {
     saveToDatabase() {
         return new Promise((resolve, reject) => {
             let baseSQL = 'INSERT INTO posts (title, description, photopath, thumbnail, created, fk_userid) VALUE (?, ?, ?, ?, now(), ?)';
+            
             db.query(baseSQL, [this.title, this.description, this.photoPath, this.thumbnailPath, this.authorID])
                 .then(([result, fields]) => {
                     if(result && result.affectedRows > 0) {
                         // Uploade Success
-                        debug.successPrint('post was created.')
                         resolve();
                     } else {
                         // Upload Failed
-                        debug.errorPrint('post was not created.')
                         reject('Post was not created');
                     }
                 })
@@ -39,13 +38,13 @@ class Post {
         })
     }
 
-    getPost(fileName) {
+    getPost(postFileName) {
         return new Promise((resolve, reject) => {
             let baseSQL = "SELECT * FROM posts WHERE photopath LIKE CONCAT('%', ?, '%')";
-            db.query(baseSQL, [fileName])
+
+            db.query(baseSQL, [postFileName])
                 .then(([result, fields]) => {
                     if(result && result.length == 0) {
-                        debug.errorPrint('Could not find a post with that name.');
                         reject(new Error('Photo not found.'));
                     }
 
@@ -58,25 +57,42 @@ class Post {
         });
     }
 
-    getAuthor() {
+    getAuthor(postID) {
         return new Promise((resolve, reject) => {
-            if(!this.authorID) {
-                reject(new Error('Author data was retrieved before post data, retrieve post first.'));
-            }
-
             let baseSQL = "SELECT username FROM users WHERE id=?";
-            db.query(baseSQL, [this.authorID])
+
+            db.query(baseSQL, [postID])
                 .then(([result, fields]) => {
-                    if(result && result.length == 0) {
+                    if(result && result.length == 1) {
+                        let data = result[0];
+                        resolve(data);
+                    } else {
                         debug.errorPrint('Could not find a user with that id.');
                         reject(new Error('User does not exist.'));
                     }
-
-                    let data = result[0];
-                    resolve(data);
                 })
                 .catch((err) => { reject(err); });
         });
+    }
+
+    incrementViews(postID) {
+        return new Promise((resolve, reject) => {
+            let baseSQL = "UPDATE posts SET views = views + 1 WHERE id=?";
+            let getViewCountSQL = "SELECT views FROM posts WHERE id=?";
+
+            db.query(baseSQL, [postID])
+                .then(([result, fields]) => {
+                    if(result && result.affectedRows > 0) {
+                        return db.query(getViewCountSQL, [postID]);
+                    } else {
+                        reject(new Error('failed to increment view counter.'));
+                    }
+                })
+                .then(([result, fields]) => {
+                    resolve(result[0].views);
+                }).catch((err) => { reject(err); });
+        })
+
     }
 };
 
