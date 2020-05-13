@@ -175,6 +175,9 @@ dist
 .yarn/build-state.yml
 .pnp.*
 
-
 # Uploads
-uploads/
+public/images/uploads/*
+
+
+# .DS_Store
+**/.DS_Store
