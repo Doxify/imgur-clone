@@ -10,9 +10,11 @@
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css"></head>
+    <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
 <body>
 
     <a class="home-link" href="/">
@@ -86,22 +88,23 @@
 <!-- Creating post via Axios -->
 <script>
     const _form = document.getElementById('post-image');
-    const _uploadButton = document.getElementById('upload-button');
+    // const _uploadButton = document.getElementById('upload-button');
 
     _form.onsubmit = (event) => {
         event.preventDefault();
-        _uploadButton.disabled = true;
+        // _uploadButton.disabled = true;
 
         let _body = new FormData(_form);
 
         axios.post('/posts/create', _body)
         .then((res) => {
             console.log(res.data);
-            _uploadButton.disabled = false;
+            location.replace(res.data.redirect);
+            // _uploadButton.disabled = false;
         })
         .catch((err) => {
             console.log(err);
-            _uploadButton.disabled = false;
+            // _uploadButton.disabled = false;
         })
     }
 </script>

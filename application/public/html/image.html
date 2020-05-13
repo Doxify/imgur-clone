@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imgur - Home</title>
+    <title>Imgur - Image</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -18,15 +20,15 @@
     <div id="navigation-bar"></div>
 
     <!-- Image Container -->
-    <div class="container mt-4">
+    <div id="image-container" class="container mt-4" hidden>
         <div class="row">
             <!-- Image Section -->
             <div class="col-sm-12 col-lg-8 mb-2">
                 <div class="card bg-dark text-white">
-                    <img src="https://fakeimg.pl/800x400/?text=Image%20Placeholder&font=roboto" class="card-img-top" alt="Error getting image, please try again later.">
+                    <img id="post-photo" src="#" class="card-img-top" alt="Error getting image, please try again later.">
                     <div class="card-body">
-                        <h3 class="card-title">Image Title</h3>
-                        <p class="card-text">This is the image's description.</p>
+                        <h3 id="post-title" class="card-title"></h3>
+                        <p id="post-description" class="card-text"></p>
                     </div>
                 </div>
             </div>
@@ -39,10 +41,9 @@
                             <div class="col-sm-12">
                                 <h5 class="card-text text-muted">Post Information</h5>
                                 <p class="card-text">
-                                    Uploaded by
-                                    <a href="#">AUTHOR NAME</a>
+                                    Uploaded by <a id="post-author" href="#"></a>
                                     <br/>
-                                    Published on April 5th, 2020.
+                                    Published on <span id="post-date">April 5th, 2020.</span>
                                 </p>
                             </div>
                         </div>
@@ -82,7 +83,7 @@
     </div>
 
     <!--Comments Container-->
-    <div class="container mt-2">
+    <div id="comments-container" class="container mt-2" hidden>
         <div class="row">
             <div class="col-sm-12 col-lg-8">
                 <div class="card bg-dark text-white">
@@ -106,6 +107,49 @@
     $.get('./components/navigation.html', (data) => {
         $('#navigation-bar').replaceWith(data);
     })
+</script>
+
+<!-- Loading post data from database -->
+<script>
+    let params = new URLSearchParams(window.location.search);
+
+    // Grabbing post information
+    if(params.has('id')) {
+        let photoID = params.get('id');
+
+        axios.get(`/posts/get/${photoID}`)
+            .then((response) => {
+                let data = response.data;
+                
+                if(data.status === 'OK') {
+                    // Image data retrieved
+                    let _imageContainer = document.getElementById('image-container');
+                    let _commentsContainer = document.getElementById('comments-container');
+                    let _postPhoto = document.getElementById('post-photo');
+                    let _postTitle = document.getElementById('post-title');
+                    let _postDescription = document.getElementById('post-description');
+                    let _postAuthor = document.getElementById('post-author');
+                    let _postDate = document.getElementById('post-date');
+                    let date = new Date(data.created);
+
+                    _postPhoto.setAttribute('src', data.location);
+                    _postTitle.innerText = data.title;
+                    _postDescription.innerText = data.description;
+                    _postAuthor.innerText = data.author;
+                    _postAuthor.setAttribute('href', `/profile/${data.author}`)
+                    _postDate.innerText = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+
+                    _imageContainer.removeAttribute('hidden');
+                } else {
+                    // Image data was not retrieved, redirect
+                    window.location.replace(data.redirect);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
 </script>
 
 </html>

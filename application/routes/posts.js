@@ -3,8 +3,8 @@ const router        = express.Router();
 const db            = require('../conf/database');
 const debug         = require('../helpers/debug/debugHelpers');
 const multer        = require('multer');
-const sharp         = require('sharp');
 const crypto        = require('crypto');
+const Post          = require('../models/Post');
 
 
 // Configuring Multer
@@ -28,39 +28,44 @@ router.post('/create', uploader.single('uploadImage'), (req, res, next) => {
     let title = req.body.title;
     let description = req.body.description;
     let fk_userid = req.session.userID;
+    let post = new Post(title, description, fileUploaded, thumbnailDestination, fk_userid);
 
-    // Resizes the image for thumbnail
-    sharp(fileUploaded)
-        .resize(200)
-        .toFile(thumbnailDestination)
+    post.generateThumbnail();
+    post.saveToDatabase()
         .then(() => {
-            // Uploads into MySQL
-            let baseSQL = 'INSERT INTO posts (title, description, photopath, thumbnail, created, fk_userid) VALUE (?, ?, ?, ?, now(), ?)';
-            return db.execute(baseSQL, [title, description, fileUploaded, thumbnailDestination, fk_userid]);
+            res.status(200).json({
+                status: "OK",
+                message: 'post was created',
+                redirect: `/image?id=${req.file.filename.split('.')[0]}`
+            })
         })
-        .then(([result, field]) => {
-            if(result && result.affectedRows > 0) {
-                // Uploade Success
-                debug.successPrint('post was created.')
-                res.status(200).json({
-                    status: "OK",
-                    message: 'post was created',
-                    redirect: `/image/${req.file.filename.split('.')[0]}`
-                })
-            } else {
-                // Upload Failed
-                debug.errorPrint('post was not created.')
-                res.status(200).json({
-                    status: "OK",
-                    message: 'post was not created',
-                    redirect: '/postimage'
-                })
-            }
+        .catch((err) => {
+            next(err);
+        })
+});
+
+router.get('/get/:name', async (req, res, next) => {
+    let fileName = req.params.name;
+    let post = new Post();
+    const response = {};
+
+    post.getPost(fileName)
+        .then((data) => {
+            console.log(data);
+            response.status = 'OK';
+            response.title = data.title;
+            response.description = data.description;
+            response.location = data.photopath.split('public/')[1];
+            response.created = data.created;
+            return post.getAuthor();
+        })
+        .then((data) => {
+            response.author = data.username;
+            return res.status(200).send(response);
         })
         .catch((err) => {
             next(err);
         });
-    console.log(req.file);
-});
+})
 
 module.exports = router;
