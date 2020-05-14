@@ -44,12 +44,25 @@ router.post('/create', uploader.single('uploadImage'), (req, res, next) => {
         })
 });
 
-router.get('/get/:name', async (req, res, next) => {
-    let fileName = req.params.name;
+router.get('/search/:keyword', (req, res, next) => {
+    let keyword = req.params.keyword;
+    let post = new Post();
+
+    post.findMany(keyword)
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => { 
+            next(err); 
+        });
+});
+
+router.get('/get/:id', (req, res, next) => {
+    let id = req.params.id;
     let post = new Post();
     const response = {};
 
-    post.getPost(fileName)
+    post.findOne(id)
         .then((data) => {
             response.status = 'OK';
             response.title = data.title;
@@ -58,24 +71,31 @@ router.get('/get/:name', async (req, res, next) => {
             response.created = data.created;
             response.id = data.id;
             response.fk_userid = data.fk_userid;
+            response.author = data.username;
             
             // Increment the amount of times this post has been viewed.
-            return post.incrementViews(response.id);
+            return post.incrementViews(id);
         })
         .then((viewCount) => {
             response.views = viewCount;
-            // Get the username of the post's author.
-            return post.getAuthor(response.fk_userid); // TODO: Make this use the user model.
-        })
-        .then((data) => {
-            response.author = data.username;
-            console.log(response);
             return res.status(200).send(response);
         })
         .catch((err) => {
             console.log(err.message);
             next(err);
         });
-})
+});
+
+router.get('/getRecentPosts', (req, res, next) => {
+    let post = new Post();
+
+    post.getMostRecent()
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => { 
+            next(err); 
+        });
+});
 
 module.exports = router;

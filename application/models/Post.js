@@ -22,7 +22,11 @@ class Post {
 
     saveToDatabase() {
         return new Promise((resolve, reject) => {
-            let baseSQL = 'INSERT INTO posts (title, description, photopath, thumbnail, created, fk_userid) VALUE (?, ?, ?, ?, now(), ?)';
+            let baseSQL = `
+                INSERT
+                INTO posts (title, description, photopath, thumbnail, created, fk_userid) 
+                VALUE (?, ?, ?, ?, now(), ?)
+            `;
             
             db.query(baseSQL, [this.title, this.description, this.photoPath, this.thumbnailPath, this.authorID])
                 .then(([result, fields]) => {
@@ -38,52 +42,74 @@ class Post {
         })
     }
 
-    getPost(postFileName) {
+    // Returns a post if it's photoPath contains postFileName.
+    findOne(id) {
         return new Promise((resolve, reject) => {
-            let baseSQL = "SELECT * FROM posts WHERE photopath LIKE CONCAT('%', ?, '%')";
+            let baseSQL = `
+                SELECT p.id, p.title, p.description, p.photopath, p.created, p.views, u.username
+                FROM posts p JOIN users u ON p.fk_userid=u.id
+                WHERE p.id=?
+            `;
 
-            db.query(baseSQL, [postFileName])
+            db.query(baseSQL, [id])
                 .then(([result, fields]) => {
                     if(result && result.length == 0) {
                         reject(new Error('Photo not found.'));
                     }
 
                     let data = result[0];
-                    this.authorID = data.fk_userid;
-
                     resolve(data);
                 })
                 .catch((err) => { reject(err); });
         });
     }
 
-    getAuthor(postID) {
+    // Returns posts that contain keyword in their titles.
+    findMany(keyword) {
         return new Promise((resolve, reject) => {
-            let baseSQL = "SELECT username FROM users WHERE id=?";
+            let baseSQL = `
+                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username
+                FROM posts p JOIN users u on p.fk_userid=u.id
+                WHERE title LIKE CONCAT('%', ?, '%')
+            `;
 
-            db.query(baseSQL, [postID])
+            db.query(baseSQL, [keyword])
                 .then(([result, fields]) => {
-                    if(result && result.length == 1) {
-                        let data = result[0];
-                        resolve(data);
-                    } else {
-                        debug.errorPrint('Could not find a user with that id.');
-                        reject(new Error('User does not exist.'));
-                    }
+                    resolve(result);
                 })
-                .catch((err) => { reject(err); });
-        });
+                .catch((err) => { reject(err); })
+        })
     }
 
-    incrementViews(postID) {
+    // Returns the 10 latest photos uploaded
+    getMostRecent() {
+        return new Promise((resolve, reject) => {
+            let baseSQL = `
+                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username
+                FROM posts p JOIN users u on p.fk_userid=u.id
+                ORDER BY created DESC LIMIT 15
+            `;
+
+            db.query(baseSQL)
+                .then(([result, fields]) => {
+                    resolve(result);
+                })
+                .catch((err) => {
+                    reject(err);
+                })
+        })
+    }
+
+    incrementViews(id) {
+        // TODO: Clean this up
         return new Promise((resolve, reject) => {
             let baseSQL = "UPDATE posts SET views = views + 1 WHERE id=?";
             let getViewCountSQL = "SELECT views FROM posts WHERE id=?";
 
-            db.query(baseSQL, [postID])
+            db.query(baseSQL, [id])
                 .then(([result, fields]) => {
                     if(result && result.affectedRows > 0) {
-                        return db.query(getViewCountSQL, [postID]);
+                        return db.query(getViewCountSQL, [id]);
                     } else {
                         reject(new Error('failed to increment view counter.'));
                     }

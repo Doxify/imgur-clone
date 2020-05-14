@@ -37,45 +37,30 @@
             <div class="col-sm-12 col-lg-4">
                 <div class="card bg-dark text-white">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h5 class="card-text text-muted">Post Information</h5>
-                                <p class="card-text">
-                                    Uploaded by <a id="post-author" href="#"></a>
-                                    <br/>
-                                    Published on <span id="post-date">April 5th, 2020.</span>
-                                </p>
-                            </div>
-                        </div>
+                        <h5 class="card-text text-muted">Post Information</h5>
+                        <p class="card-text">
+                            Uploaded by <a id="post-author" href="#"></a>
+                            <br/>
+                            Published <span id="post-date"></span>
+                        </p>
+                        
                         <hr/>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h5 class="card-text text-muted">Statistics</h5>
-                                <div class="row text-left">
-                                    <!-- Upvote counter -->
-                                    <div class="col-sm-4">
-                                        <p class="card-text">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <small>100</small>
-                                        </p>
-                                    </div>
-                                    <!-- Comment Counter -->
-                                    <div class="col-sm-4">
-                                        <p class="card-text">
-                                            <i class="fas fa-comment"></i>
-                                            <small>34</small>
-                                        </p>
-                                    </div>
-                                    <!-- View Counter -->
-                                    <div class="col-sm-4">
-                                        <p class="card-text">
-                                            <i class="fas fa-eye"></i>
-                                            <small id="post-views"></small>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        <h5 class="card-text text-muted">Statistics</h5>
+                        <ul class="list-inline">
+                            <!-- <li class="list-inline-item">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="post-upvotes">100</span>
+                            </li>
+                            <li class="list-inline-item">
+                                <i class="fas fa-comment"></i>
+                                <span id="post-comments">34</span>
+                            </li> -->
+                            <li class="list-inline-item">
+                                <i class="fas fa-eye"></i>
+                                <span id="post-views"></span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -101,6 +86,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Moment.js -->
+<script src="https://momentjs.com/downloads/moment.js"></script>
 
 <!-- Loading Navigation 'Component' -->
 <script>
@@ -131,14 +118,13 @@
                     let _postAuthor = document.getElementById('post-author');
                     let _postDate = document.getElementById('post-date');
                     let _postViews = document.getElementById('post-views');
-                    let date = new Date(data.created);
 
                     _postPhoto.setAttribute('src', data.location);
                     _postTitle.innerText = data.title;
                     _postDescription.innerText = data.description;
                     _postAuthor.innerText = data.author;
                     _postAuthor.setAttribute('href', `/profile/${data.author}`)
-                    _postDate.innerText = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+                    _postDate.innerText = moment(new Date(data.created)).fromNow();
                     _postViews.innerText = data.views;
 
                     _imageContainer.removeAttribute('hidden');

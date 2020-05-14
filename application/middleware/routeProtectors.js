@@ -10,4 +10,13 @@ routeProtectors.isAuthenticated = (req, res, next) => {
     }
 };
 
+routeProtectors.isValidImageLink = (req, res, next) => {
+    if(req.query['id'] === undefined) {
+        // No image id provided, redirect to index.
+        res.redirect('/');
+    } else {
+        next();
+    }
+}
+
 module.exports = routeProtectors;

@@ -20,8 +20,8 @@
         <!-- Search bar -->
         <form class="form-inline my-2 my-lg-0" action="">
             <div class="form-group">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search for images" aria-label="Search">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="search">
+                <input id="search-input" class="form-control mr-sm-2" type="search" placeholder="Search for images" aria-label="Search" required>
+                <button id="query-button" class="btn btn-outline-primary my-2 my-sm-0" type="search">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
@@ -63,3 +63,14 @@
 
 <!-- Implementing sessions -->
 <script src="../javascripts/sessions.js"></script>
+
+<!-- Handling Search -->
+<script>
+    let _searchInput = document.getElementById('search-input');
+    let _searchButton = document.getElementById('query-button');
+
+    _searchButton.onclick = (event) => {
+        event.preventDefault();
+        location.replace(`/search?query=${_searchInput.value}`);
+    }
+</script>
