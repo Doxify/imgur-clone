@@ -32,7 +32,7 @@ class Post {
                 .then(([result, fields]) => {
                     if(result && result.affectedRows > 0) {
                         // Uploade Success
-                        resolve();
+                        resolve(result.insertId);
                     } else {
                         // Upload Failed
                         reject('Post was not created');
@@ -50,6 +50,11 @@ class Post {
                 FROM posts p JOIN users u ON p.fk_userid=u.id
                 WHERE p.id=?
             `;
+            // let commentsSQL = `
+            //     SELECT COUNT(*)
+            //     FROM comments c
+            //     WHERE c.fk_postid=?
+            // `;
 
             db.query(baseSQL, [id])
                 .then(([result, fields]) => {
@@ -68,7 +73,8 @@ class Post {
     findMany(keyword) {
         return new Promise((resolve, reject) => {
             let baseSQL = `
-                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username
+                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
+                (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
                 FROM posts p JOIN users u on p.fk_userid=u.id
                 WHERE title LIKE CONCAT('%', ?, '%')
             `;
@@ -85,7 +91,8 @@ class Post {
     getMostRecent() {
         return new Promise((resolve, reject) => {
             let baseSQL = `
-                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username
+                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
+                (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
                 FROM posts p JOIN users u on p.fk_userid=u.id
                 ORDER BY created DESC LIMIT 15
             `;

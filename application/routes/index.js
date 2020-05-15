@@ -5,7 +5,6 @@ var router    = express.Router();
 var authMiddleware = require('../middleware/routeProtectors').isAuthenticated;
 var validImageMiddleware = require('../middleware/routeProtectors').isValidImageLink;
 
-
 router.get('/', (req, res, next) => {
   res.sendFile('/index.html', { root: 'public/html' });
 });

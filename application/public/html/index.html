@@ -18,11 +18,14 @@
     <div id="navigation-bar"></div>
 
     <!-- Quote Section -->
-    <div class="row">
+    <div id="quote-row"  class="row" hidden>
         <div class="col-sm-12">
             <div class="card text-center header-card">
                 <div class="card-body">
-                    <h4 class="card-text header-title"><strong>QUOTE OF THE DAY</strong></h4>
+                    <blockquote class="blockquote text-center">
+                        <p id="quote-text" class="mb-0"></p>
+                        <footer id="quote-author" class="blockquote-footer"></footer>
+                    </blockquote>
                 </div>
             </div>
         </div>
@@ -42,8 +45,6 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Moment.js -->
 <script src="https://momentjs.com/downloads/moment.js"></script>
-<!-- Image Card Functions -->
-<script src="../javascripts/images.js"></script>
 
 <!-- Loading Navigation "Component" -->
 <script>
@@ -52,24 +53,48 @@
     })
 </script>
 
+<!-- Getting a random quote -->
+<script>
+    let _quoteRow = document.getElementById('quote-row');
+    let _quoteText = document.getElementById('quote-text');
+    let _quoteAuthor = document.getElementById('quote-author');
+
+    axios.get('https://api.quotable.io/random')
+        .then((response) => {
+            let quote = response.data;
+            _quoteText.innerText = quote.content;
+            _quoteAuthor.innerText = quote.author;
+            _quoteRow.removeAttribute('hidden');
+        })
+        .catch((err) => {
+            // Displaying default quote
+            _quoteText.innerText = 'Failure is an option here. If things are not failing, you are not innovating enough.';
+            _quoteAuthor.innerText = 'Elon Musk';
+            _quoteRow.removeAttribute('hidden');
+        })
+
+</script>
+
+<!-- Image Card Functions -->
+<script src="../javascripts/images.js"></script>
 <!-- Getting Most Recent Images -->
 <script>
-        axios.get('/posts/getRecentPosts')
-            .then((response) => {
-                const results = response.data;
-                let _imageContainer = document.getElementById('image-card-container');
-                let _queryResultsHTML = '';
-                
-                results.forEach((post) => {
-                    _queryResultsHTML += createImageCard(post);
-                });
+    axios.get('/posts/getRecentPosts')
+        .then((response) => {
+            const results = response.data;
+            let _imageContainer = document.getElementById('image-card-container');
+            let _queryResultsHTML = '';
+            
+            results.forEach((post) => {
+                _queryResultsHTML += createImageCard(post);
+            });
 
-                _imageContainer.innerHTML = _queryResultsHTML;
-                _imageContainer.removeAttribute('hidden');
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+            _imageContainer.innerHTML = _queryResultsHTML;
+            _imageContainer.removeAttribute('hidden');
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 </script>
 
 </html>

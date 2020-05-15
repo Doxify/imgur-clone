@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imgur - Image</title>
+    <title id="head-post-title">Imgur</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -51,11 +51,11 @@
                             <!-- <li class="list-inline-item">
                                 <i class="fas fa-arrow-up"></i>
                                 <span id="post-upvotes">100</span>
-                            </li>
+                            </li> -->
                             <li class="list-inline-item">
                                 <i class="fas fa-comment"></i>
-                                <span id="post-comments">34</span>
-                            </li> -->
+                                <span id="post-comments"></span>
+                            </li>
                             <li class="list-inline-item">
                                 <i class="fas fa-eye"></i>
                                 <span id="post-views"></span>
@@ -68,17 +68,61 @@
     </div>
 
     <!--Comments Container-->
-    <div id="comments-container" class="container mt-2" hidden>
+    <div id="comments-container" class="container mt-2 mb-5" hidden>
         <div class="row">
             <div class="col-sm-12 col-lg-8">
                 <div class="card bg-dark text-white">
                     <div class="card-body">
-                        <h5 class="card-title">Comments (0)</h5>
+                        <h5 class="card-title text-muted">Comments</h5>
+
+                        <!-- No User Found Alert -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="comment-no-user-alert" hidden>
+                                    <div class="alert alert-danger " role="alert">
+                                        You must be logged in to leave a comment, 
+                                        <a href="/login" class="alert-link">login</a> or <a href="/register" class="alert-link">create</a> an account.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comment input form -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <form id="comment-form" method="POST" enctype="application/x-www-form-urlencoded">
+                                    <div class="form-group">
+                                        <input type="hidden" id="post-id" name="fk_postid">
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea 
+                                            type="textarea" 
+                                            id="comment-text" 
+                                            class="form-control" 
+                                            name="text" 
+                                            placeholder="Leave a comment"
+                                            rows="2"
+                                            required
+                                            ></textarea>
+                                    </div>
+                                    <button id="submit-comment-button" type="submit" class="btn-sm btn-success float-right mb-3">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Post comments -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="comment-list" class="list-group">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 </body>
 
@@ -88,6 +132,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!-- Moment.js -->
 <script src="https://momentjs.com/downloads/moment.js"></script>
+<!-- Image Functions -->
+<script src="../javascripts/images.js"></script>
+<!-- Comment Functions -->
+<script src="../javascripts/comments.js"></script>
+
 
 <!-- Loading Navigation 'Component' -->
 <script>
@@ -96,7 +145,6 @@
     })
 </script>
 
-<!-- Loading post data from database -->
 <script>
     let params = new URLSearchParams(window.location.search);
 
@@ -104,38 +152,27 @@
     if(params.has('id')) {
         let photoID = params.get('id');
 
-        axios.get(`/posts/get/${photoID}`)
-            .then((response) => {
-                let data = response.data;
-                
-                if(data.status === 'OK') {
-                    // Image data retrieved
-                    let _imageContainer = document.getElementById('image-container');
-                    let _commentsContainer = document.getElementById('comments-container');
-                    let _postPhoto = document.getElementById('post-photo');
-                    let _postTitle = document.getElementById('post-title');
-                    let _postDescription = document.getElementById('post-description');
-                    let _postAuthor = document.getElementById('post-author');
-                    let _postDate = document.getElementById('post-date');
-                    let _postViews = document.getElementById('post-views');
+        // Getting post information
+        getPostData(photoID);
 
-                    _postPhoto.setAttribute('src', data.location);
-                    _postTitle.innerText = data.title;
-                    _postDescription.innerText = data.description;
-                    _postAuthor.innerText = data.author;
-                    _postAuthor.setAttribute('href', `/profile/${data.author}`)
-                    _postDate.innerText = moment(new Date(data.created)).fromNow();
-                    _postViews.innerText = data.views;
+        // Getting post comments
+        getComments(photoID);
 
-                    _imageContainer.removeAttribute('hidden');
-                } else {
-                    // Image data was not retrieved, redirect
-                    window.location.replace(data.redirect);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        // Setting up the comments input form
+        let _photoIdInput = document.getElementById('post-id');
+        _photoIdInput.value = photoID;
+
+        let _form = document.getElementById('comment-form');
+        _form.onsubmit = (event) => {
+            event.preventDefault();
+            addComment(photoID)
+                .then(() => {
+                    getComments();
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
     }
 
 </script>

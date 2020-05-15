@@ -53,9 +53,6 @@
 <!-- Moment.js -->
 <script src="https://momentjs.com/downloads/moment.js"></script>
 
-<!-- Image Card Functions -->
-<script src="../javascripts/images.js"></script>
-
 <!-- Loading Navigation 'Component' -->
 <script>
     $.get('./components/navigation.html', (data) => {
@@ -63,6 +60,8 @@
     })
 </script>
 
+<!-- Image Card Functions -->
+<script src="../javascripts/images.js"></script>
 <!-- Querying database -->
 <script>
     let params = new URLSearchParams(window.location.search);
@@ -70,7 +69,7 @@
     var searchQuery = params.get('query');
 
     if(params.has('query')) {
-        _query.innerText = searchQuery;
+        _query.innerText = searchQuery.toUpperCase();
         runSearch();
     }
 

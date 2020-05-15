@@ -32,11 +32,11 @@ router.post('/create', uploader.single('uploadImage'), (req, res, next) => {
 
     post.generateThumbnail();
     post.saveToDatabase()
-        .then(() => {
+        .then((id) => {
             res.status(200).json({
                 status: "OK",
                 message: 'post was created',
-                redirect: `/image?id=${req.file.filename.split('.')[0]}`
+                redirect: `/image?id=${id}`
             })
         })
         .catch((err) => {

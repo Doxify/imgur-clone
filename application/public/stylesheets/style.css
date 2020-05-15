@@ -56,6 +56,22 @@ header h4 {
     color: #6b77fa;
 }
 
+.alert-danger {
+    color: #ffffff !important;
+    background-color: #ff5c5c !important;
+    border-color: #ad3e3e !important;
+};
+
+.alert-danger .alert-link {
+    color: #ad3e3e !important;
+}
+
+.form-control {
+    color: #ffffff !important;
+    background-color: #191919 !important;
+    border-color: #101010 !important;
+}
+
 /* Overwriting Bootstrap Done */
 
 

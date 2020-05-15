@@ -1,7 +1,7 @@
 var authLinks = document.getElementById('auth-links');
 var userLinks = document.getElementById('user-links');
 
-function logOutClick(event) {
+function logOutClick() {    
     var fetchURL = 'http://localhost:3000/users/logout';
     var fectchOptions = {
         method: 'post',
@@ -24,13 +24,10 @@ function logOutClick(event) {
 
 if(document.cookie.includes('csid')) {
     // Session has been found, display user links.
-    console.log('found a session');
     var logoutButton = document.getElementById('logout-button');
-
     logoutButton.onclick = logOutClick;
     userLinks.removeAttribute('hidden');
 } else {
     // Session has not been found, display auth links.
-    console.log('no session found!');
     authLinks.removeAttribute('hidden');
 }

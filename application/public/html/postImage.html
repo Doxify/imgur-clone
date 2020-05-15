@@ -88,23 +88,18 @@
 <!-- Creating post via Axios -->
 <script>
     const _form = document.getElementById('post-image');
-    // const _uploadButton = document.getElementById('upload-button');
 
     _form.onsubmit = (event) => {
         event.preventDefault();
-        // _uploadButton.disabled = true;
-
         let _body = new FormData(_form);
 
         axios.post('/posts/create', _body)
         .then((res) => {
             console.log(res.data);
             location.replace(res.data.redirect);
-            // _uploadButton.disabled = false;
         })
         .catch((err) => {
             console.log(err);
-            // _uploadButton.disabled = false;
         })
     }
 </script>
