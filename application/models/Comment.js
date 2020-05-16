@@ -1,48 +1,40 @@
-'use strict';
-
 const db        = require('../conf/database');
-const debug         = require('../helpers/debug/debugHelpers');
 
-class Comment {
+const CommentModel = {
+    // Returns comments for the given post.
+    getPostComments: function(postId) {
+        let baseSQL = `
+            SELECT c.text, c.created, u.username
+            FROM comments c JOIN users u ON c.fk_userid=u.id
+            WHERE c.fk_postid=?
+            ORDER BY created DESC
+        `;
 
-    getPostComments(postID) {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                SELECT c.text, c.created, u.username
-                FROM comments c JOIN users u ON c.fk_userid=u.id
-                WHERE c.fk_postid=?
-                ORDER BY created DESC
-            `;
+        return db.query(baseSQL, [postId])
+            .then(([result, fields]) => {
+                return Promise.resolve(result);
+            })
+            .catch((err) => {
+                throw err;
+            })
+    },
+    // Adds a comment to the database.
+    addPostComment: function(postId, userId, comment) {
+        let baseSQL = `
+            INSERT INTO comments (fk_postid, fk_userid, text, created)
+            VALUE (?, ?, ?, now())
+        `;
 
-            db.query(baseSQL, [postID])
-                .then(([result, fields]) => {
-                    resolve(result);
-                })
-                .catch((err) => {
-                    reject(err);
-                })
-        })
+        return db.query(baseSQL, [postId, userId, comment])
+            .then(([result, fields]) => {
+                if(result && result.affectedRows == 1) {
+                    return Promise.resolve(true);
+                } else {
+                    return Promise.resolve(false);
+                }
+            }).catch((err) => {
+                throw err;
+            })
     }
-    
-    addComment(postID, userID, comment) {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                INSERT INTO comments (fk_postid, fk_userid, text, created)
-                VALUE (?, ?, ?, now())
-            `;
-
-            db.query(baseSQL, [postID, userID, comment])
-                .then(([result, fields]) => {
-                    if(result && result.affectedRows == 1) {
-                        resolve();
-                    } else {
-                        reject(new Error('Error while adding comment to the database.'));
-                    }
-                }).catch((err) => {
-                    reject(err);
-                })
-        })
-    }
-}
-
-module.exports = Comment;
+};
+module.exports = CommentModel;

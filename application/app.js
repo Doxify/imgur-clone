@@ -6,6 +6,7 @@ var bodyParser      = require('body-parser');
 var session         = require('express-session');
 var mysqlStore      = require('express-mysql-session')(session);
 var app             = express();
+var debug           = require('./helpers/debug/debugHelpers');
 
 // Routes
 var indexRouter     = require('./routes/index');
@@ -44,6 +45,7 @@ app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 
 app.use((err, req, res, next) => {
+    debug.errorPrint(err.message);
     res.status(500);
     res.json({
         status: 500,

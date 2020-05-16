@@ -94,6 +94,10 @@ header h4 {
     width: 50%;
 }
 
+.image-card-container {
+    margin-top: -15px;
+}
+
 
 /* Index Page */
 .header-card {

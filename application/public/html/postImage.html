@@ -95,7 +95,6 @@
 
         axios.post('/posts/create', _body)
         .then((res) => {
-            console.log(res.data);
             location.replace(res.data.redirect);
         })
         .catch((err) => {

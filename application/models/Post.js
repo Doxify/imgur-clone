@@ -1,132 +1,128 @@
-'use strict';
-
 const db        = require('../conf/database');
 const sharp     = require('sharp');
-const debug         = require('../helpers/debug/debugHelpers');
 
+const PostModel = {
+    // Creates a new post and saves it to the database. Returns the id of the created post.
+    create: function(title, description, photoPath, thumbnailPath, fk_userid) {
+        let baseSQL = `
+            INSERT
+            INTO posts (title, description, photopath, thumbnail, created, fk_userid) 
+            VALUE (?, ?, ?, ?, now(), ?)
+        `;
 
-class Post {
-    constructor(title, description, photoPath, thumbnailPath, fk_userid) {
-        this.title = title;
-        this.description = description;
-        this.photoPath = photoPath;
-        this.thumbnailPath = thumbnailPath;
-        this.authorID = fk_userid;
-    }
-
-    generateThumbnail() {
-        sharp(this.photoPath)
+        return sharp(photoPath)
             .resize(200)
-            .toFile(this.thumbnailPath);
-    }
+            .toFile(thumbnailPath)
+            .then(() => {
+                return db.query(baseSQL, [title, description, photoPath, thumbnailPath, fk_userid])
+            })
+            .then(([result, fields]) => {
+                if(result && result.affectedRows) {
+                    return Promise.resolve(result.insertId);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                throw err;
+            })
+    },
+    // Returns the post with the given id.
+    findOne: function(id) {
+        let baseSQL = `
+            SELECT p.id, p.title, p.description, p.photopath, p.created, p.views, u.username
+            FROM posts p JOIN users u ON p.fk_userid=u.id
+            WHERE p.id=?
+        `;
 
-    saveToDatabase() {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                INSERT
-                INTO posts (title, description, photopath, thumbnail, created, fk_userid) 
-                VALUE (?, ?, ?, ?, now(), ?)
-            `;
-            
-            db.query(baseSQL, [this.title, this.description, this.photoPath, this.thumbnailPath, this.authorID])
-                .then(([result, fields]) => {
-                    if(result && result.affectedRows > 0) {
-                        // Uploade Success
-                        resolve(result.insertId);
-                    } else {
-                        // Upload Failed
-                        reject('Post was not created');
-                    }
-                })
-                .catch((err) => { reject(err); })
-        })
-    }
-
-    // Returns a post if it's photoPath contains postFileName.
-    findOne(id) {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                SELECT p.id, p.title, p.description, p.photopath, p.created, p.views, u.username
-                FROM posts p JOIN users u ON p.fk_userid=u.id
-                WHERE p.id=?
-            `;
-            // let commentsSQL = `
-            //     SELECT COUNT(*)
-            //     FROM comments c
-            //     WHERE c.fk_postid=?
-            // `;
-
-            db.query(baseSQL, [id])
-                .then(([result, fields]) => {
-                    if(result && result.length == 0) {
-                        reject(new Error('Photo not found.'));
-                    }
-
-                    let data = result[0];
-                    resolve(data);
-                })
-                .catch((err) => { reject(err); });
-        });
-    }
-
+        return db.query(baseSQL, [id])
+            .then(([result, fields]) => {
+                if(result && result.length > 0) {
+                    return Promise.resolve(result[0]);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    },
     // Returns posts that contain keyword in their titles.
-    findMany(keyword) {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
-                (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
-                FROM posts p JOIN users u on p.fk_userid=u.id
-                WHERE title LIKE CONCAT('%', ?, '%')
-            `;
+    findMany: function(keyword) {
+        let baseSQL = `
+            SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
+            (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
+            FROM posts p JOIN users u on p.fk_userid=u.id
+            WHERE title LIKE CONCAT('%', ?, '%')
+        `;
 
-            db.query(baseSQL, [keyword])
-                .then(([result, fields]) => {
-                    resolve(result);
-                })
-                .catch((err) => { reject(err); })
-        })
-    }
+        return db.query(baseSQL, [keyword])
+            .then(([result, fields]) => {
+                if(result && result.length > 0) {
+                    return Promise.resolve(result);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    },
+    // Returns posts made by the given username
+    findUserPosts: function(username) {
+        let baseSQL = `
+            SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
+            (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
+            FROM posts p JOIN users u on p.fk_userid=u.id
+            WHERE u.username=?
+            ORDER BY p.created DESC
+        `;
 
-    // Returns the 10 latest photos uploaded
-    getMostRecent() {
-        return new Promise((resolve, reject) => {
-            let baseSQL = `
-                SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
-                (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
-                FROM posts p JOIN users u on p.fk_userid=u.id
-                ORDER BY created DESC LIMIT 15
-            `;
+        return db.query(baseSQL, [username])
+            .then(([result, fields]) => {
+                if(result && result.length > 0) {
+                    return Promise.resolve(result);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    },
+    // Returns the x most recent posts uploaded to the database.
+    getMostRecent: function(x) {
+        let baseSQL = `
+            SELECT p.id, p.title, p.description, p.thumbnail, p.created, p.views, u.username,
+            (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
+            FROM posts p JOIN users u on p.fk_userid=u.id
+            ORDER BY created DESC LIMIT ?
+        `;
 
-            db.query(baseSQL)
-                .then(([result, fields]) => {
-                    resolve(result);
-                })
-                .catch((err) => {
-                    reject(err);
-                })
-        })
-    }
+        return db.query(baseSQL, [x])
+            .then(([result, fields]) => {
+                if(result && result.length > 0) {
+                    return Promise.resolve(result);
+                } else {
+                    return Promise.resolve(false);
+                }
+            })
+            .catch((err) => {
+                throw err;
+            });
+    },
+    // Increases the view count on the given post
+    incrementViews: function(id) {
+        let baseSQL = "UPDATE posts SET views = views + 1 WHERE id=?";
 
-    incrementViews(id) {
-        // TODO: Clean this up
-        return new Promise((resolve, reject) => {
-            let baseSQL = "UPDATE posts SET views = views + 1 WHERE id=?";
-            let getViewCountSQL = "SELECT views FROM posts WHERE id=?";
-
-            db.query(baseSQL, [id])
-                .then(([result, fields]) => {
-                    if(result && result.affectedRows > 0) {
-                        return db.query(getViewCountSQL, [id]);
-                    } else {
-                        reject(new Error('failed to increment view counter.'));
-                    }
-                })
-                .then(([result, fields]) => {
-                    resolve(result[0].views);
-                }).catch((err) => { reject(err); });
-        })
-
+        return db.query(baseSQL, [id])
+            .then(([result, fields]) => {
+                return Promise.resolve();
+            })
+            .catch((err) => {
+                throw err;
+            })
     }
 };
 
-module.exports = Post;
+module.exports = PostModel;

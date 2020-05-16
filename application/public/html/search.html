@@ -39,7 +39,7 @@
     </div>
 
     <!-- Images Container -->
-    <div id="image-card-container" class="container card-columns mt-4" hidden>
+    <div id="image-card-container" class="container card-columns image-card-container" hidden>
     </div>
 
 </body>
@@ -72,35 +72,6 @@
         _query.innerText = searchQuery.toUpperCase();
         runSearch();
     }
-
-    function runSearch() {
-    axios.get(`/posts/search/${searchQuery}`)
-        .then((response) => {
-            const results = response.data;
-            let _imageContainer = document.getElementById('image-card-container');
-
-            // No images found, show an alert.
-            if(results.length === 0) {
-                console.log(results);
-                let _queryAlertContainer = document.getElementById('query-alert');
-                let _queryAlertText = document.getElementById('query-alert-text');
-                _queryAlertText.innerText = searchQuery;
-                _queryAlertContainer.removeAttribute('hidden');
-            } else {
-                // Results were found, displaying them.
-                let _queryResultsHTML = '';
-                results.forEach((post) => {
-                    _queryResultsHTML += createImageCard(post);
-                });
-
-                _imageContainer.innerHTML = _queryResultsHTML;
-                _imageContainer.removeAttribute('hidden');
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-};
 </script>
 
 </html>
