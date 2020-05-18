@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.0.1",
     "bcrypt": "^4.0.1",
     "colors": "^1.4.0",
     "cookie-parser": "~1.4.4",
@@ -19,6 +18,7 @@
     "multer": "^1.4.2",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.3",
-    "sharp": "^0.25.2"
+    "sharp": "^0.25.2",
+    "validator": "^13.0.0"
   }
 }

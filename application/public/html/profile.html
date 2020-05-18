@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imgur - Home</title>
+    <title id="head-profile-username">Imgur</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
@@ -17,31 +17,27 @@
     <!-- NAVBAR -->
     <div id="navigation-bar"></div>
 
-    <div class="container mt-4">
-        
+    <div id="profile-container" class="container mt-4" hidden>
         <!-- User Information -->
         <div class="row">
             <div class="col-sm-12">
-                <div class="card bg-dark text-white">
+                <div class="card bg-primary text-white">
                     <div class="card-body">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 id="profile-username" class="card-title mb-1">test</h5>
-                            <p class="text-muted">
+                            <h4 id="profile-username" class="card-title"></h4>
+                            <p>
                                 Registered
-                                <span id="profile-register-date" class="text-white"></span>
+                                <strong><span id="profile-register-date" class="text-white"></span></strong>
                             </p>
                         </div>
                         <ul class="list-inline float-right">
-                            <li class="list-inline-item text-muted">
-                                Post Statistics
-                            </li>
                             <li class="list-inline-item">
                                 <i class="fas fa-upload"></i>
-                                <strong><span id="post-uploads"></span> uploads</strong>
+                                <strong><span id="post-uploads"></span></strong> uploads
                             </li>
                             <li class="list-inline-item">
                                 <i class="fas fa-eye"></i>
-                                <strong><span id="post-views"></span> views</strong>
+                                <strong><span id="post-views"></span></strong> views
                             </li>
                         </ul>
                     </div>
@@ -68,8 +64,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Moment.js -->
 <script src="https://momentjs.com/downloads/moment.js"></script>
-<!-- Image Card Functions -->
+<!-- Image Card Function -->
 <script src="../javascripts/images.js"></script>
+<!-- Profile Functions -->
+<script src="../javascripts/profile.js"></script>
 
 <!-- Loading Navigation 'Component' -->
 <script>

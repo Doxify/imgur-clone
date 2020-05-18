@@ -3,6 +3,7 @@ const UserError     = require('../helpers/errors/UserError');
 const multer        = require('multer');
 const crypto        = require('crypto');
 const PostModel     = require('../models/Post');
+const validator     = require('validator');
 
 // Configuring Multer
 const storage = multer.diskStorage({
@@ -16,38 +17,69 @@ const storage = multer.diskStorage({
     }
 });
 
+const validMimeTypes = [
+    'image/gif',
+    'image/jpeg',
+    'image/png'
+];
 
+const uploader = multer({ 
+    storage: storage,
+    fileFilter: function(req, file, cb) {
+        if(!validMimeTypes.includes(file.mimetype)) {
+            return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+    }
+});
 
 const PostController = {
-    uploader: multer({ storage: storage }),
-
     createPost: function(req, res, next) {
-        let fileUploaded = req.file.path;
-        let fileAsThumbnail = `thumbnail-${req.file.filename}`;
-        let thumbnailDestination = `${req.file.destination}/${fileAsThumbnail}`;
-        let title = req.body.title;
-        let description = req.body.description;
-        let fk_userid = req.session.userID;
-        
-        PostModel.create(title, description, fileUploaded, thumbnailDestination, fk_userid)
-            .then((postID) => {
-                if(postID) {
-                    res.status(200).json({
-                        redirect: `/image?id=${postID}`
+        uploader.single('uploadImage')(req, res, (err) => {
+            if(err) {
+                res.status(200).json({
+                    status: 'ERROR',
+                    message: 'Only images/gifs are allowed.',
+                    redirect: '/postImage'
+                });
+            } else {
+                let fileUploaded = req.file.path;
+                let fileAsThumbnail = `thumbnail-${req.file.filename}`;
+                let thumbnailDestination = `${req.file.destination}/${fileAsThumbnail}`;
+                let title = req.body.title;
+                let description = req.body.description;
+                let fk_userid = req.session.userID;
+                
+                PostModel.create(title, description, fileUploaded, thumbnailDestination, fk_userid)
+                    .then((postID) => {
+                        if(postID) {
+                            res.status(200).json({
+                                status: 'OK',
+                                message: 'Post uploaded successfully.',
+                                redirect: `/image?id=${postID}`
+                            })
+                        } else {
+                            res.status(200).json({
+                                status: 'ERROR',
+                                message: 'Post upload failed, try again.',
+                                redirect: '/postImage'
+                            })
+                        }
                     })
-                } else {
-                    res.status(200).json({
-                        redirect: '/postImage'
-                    })
-                }
-            })
-            .catch((err) => {
-                next(err);
-            });
+                    .catch((err) => {
+                        console.log(err.message);
+                        next(err);
+                    });
+            }
+        })
     },
     getPost: function(req, res, next) {
         let id = req.params.id;
-        PostModel.findOne(id)
+
+        PostModel.incrementViews(id)
+            .then(() => {
+                return PostModel.findOne(id)
+            })
             .then((post) => {
                 if(post) {
                     res.status(200).json(post);
@@ -99,18 +131,6 @@ const PostController = {
             .catch((err) => {
                 next(err);
             });
-    },
-    incrementPostViewCount: function(req, res, next) {
-        let id = req.body.id;
-        
-        PostModel.incrementViews(id)
-            .then(() => {
-                res.status(200);
-            })
-            .catch((err) => {
-                next(err);
-            })
-
     }
 };
 

@@ -1,12 +1,10 @@
 var express         = require('express');
 var path            = require('path');
-var cookieParser    = require('cookie-parser');
 var logger          = require('morgan');
 var bodyParser      = require('body-parser');
 var session         = require('express-session');
 var mysqlStore      = require('express-mysql-session')(session);
 var app             = express();
-var debug           = require('./helpers/debug/debugHelpers');
 
 // Routes
 var indexRouter     = require('./routes/index');
@@ -18,7 +16,7 @@ var commentsRouter  = require('./routes/comments');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Sessions
@@ -37,20 +35,16 @@ var sessionOptions = {
     saveUninitialized: false,
 };
 
-app.use(session(sessionOptions));
 
+app.use(session(sessionOptions));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
 
+// Displaying error page on backend malfunctions.
 app.use((err, req, res, next) => {
-    debug.errorPrint(err.message);
-    res.status(500);
-    res.json({
-        status: 500,
-        message: 'Something went wrong with the database..'
-    });
+    res.sendFile('error.html', { root: 'public/html' });
 });
 
 module.exports = app;

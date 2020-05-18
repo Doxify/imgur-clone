@@ -30,7 +30,8 @@ const PostModel = {
     // Returns the post with the given id.
     findOne: function(id) {
         let baseSQL = `
-            SELECT p.id, p.title, p.description, p.photopath, p.created, p.views, u.username
+            SELECT p.id, p.title, p.description, p.photopath, p.created, p.views, u.username,
+            (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
             FROM posts p JOIN users u ON p.fk_userid=u.id
             WHERE p.id=?
         `;
@@ -54,6 +55,7 @@ const PostModel = {
             (SELECT COUNT(*) FROM comments c WHERE c.fk_postid=p.id) comments
             FROM posts p JOIN users u on p.fk_userid=u.id
             WHERE title LIKE CONCAT('%', ?, '%')
+            ORDER BY p.created DESC
         `;
 
         return db.query(baseSQL, [keyword])
@@ -122,6 +124,21 @@ const PostModel = {
             .catch((err) => {
                 throw err;
             })
+    },
+    // Checks if a post with the given id exists
+    postExists: function(id) {
+        let baseSQL = `
+            SELECT * 
+            FROM posts 
+            WHERE id=?
+        `;
+        return db.query(baseSQL, [id])
+            .then(([result, fields]) => {
+                return Promise.resolve(result && result.length == 1);
+            })
+            .catch((err) => {
+                throw err;
+            });
     }
 };
 

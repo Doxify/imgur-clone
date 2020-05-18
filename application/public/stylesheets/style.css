@@ -3,31 +3,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* color: #ffffff; */
 }
 
 body {
     font-family: Helvetica, Arial, sans-serif;
-    /* padding: 2rem;  */
     background: #191919;
-}
-
-header {
-    /* padding: 5px; */
-    margin-bottom: 10px;
-}
-
-header h1 {
-    font-weight: 400;
-}
-
-header h4 {
-    font-weight: 300;
 }
 
 /* Overwriting Bootstrap Start */
 .bg-dark {
     background: #282828 !important;
+}
+
+.bg-primary {
+    background: #5c69ff !important;
 }
 
 .btn-primary {
@@ -47,6 +36,13 @@ header h4 {
 .btn-outline-primary:hover {
     background: #6b77fa;
     border: 1px solid #5c69ff;
+}
+
+a {
+    color: #5c69ff;
+}
+a:hover {
+    color: #6b77fa;
 }
 
 .card-link {
@@ -72,6 +68,10 @@ header h4 {
     border-color: #101010 !important;
 }
 
+.container-fluid{
+    padding: 0 !important;
+}
+
 /* Overwriting Bootstrap Done */
 
 
@@ -81,7 +81,6 @@ header h4 {
     top: 10px;
     left: 10px;
 }
-
 
 .small-container {
     max-width: 400px;
@@ -98,23 +97,23 @@ header h4 {
     margin-top: -15px;
 }
 
-
-/* Index Page */
 .header-card {
     border-radius: 0 !important;
     padding: 2.5rem;
     color: white;
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
-    border-bottom-left-radius: 50% 20%;
-    /* border-bottom-right-radius: 50% 20%; */
+    /* Credit Atle Mo, Sébastien Grosjean */
+    /* https://leaverou.github.io/css3patterns/#carbon */
+    background:
+        linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+        linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+        linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+        linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+        linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+        linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px;
 }
 
-
-/* General */
 .card-deck {
     padding: 2rem 2rem 1rem 2rem;
-}
-
-.image-thumbnail-card:hover {
-    box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }

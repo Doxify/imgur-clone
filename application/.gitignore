@@ -176,7 +176,7 @@ dist
 .pnp.*
 
 # Uploads
-public/images/uploads/*
+# public/images/uploads/*
 
 
 # .DS_Store

@@ -9,6 +9,7 @@
     
     <div class="collapse navbar-collapse" id="navbar-content">
         <ul class="navbar-nav mr-auto">
+            <!-- New Post Button -->
             <li class="nav-item">
                 <button id="new-post-button" class="btn-sm btn-success my-2 my-sm-0">
                     <i class="fas fa-upload"></i>
@@ -19,24 +20,27 @@
 
         <!-- Search bar -->
         <form class="form-inline my-2 my-lg-0" action="">
-            <div class="form-group">
-                <input id="search-input" class="form-control mr-sm-2" type="search" placeholder="Search for images" aria-label="Search" required>
+            <div class="input-group">
+                <input id="search-input" class="form-control" type="search" placeholder="Search for images" aria-label="Search" required>
+                <div class="input-group-append">
+                    <button id="query-button" class="btn-sm btn-success" type="search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </div>
-            <button id="query-button" class="btn-sm btn-success my-2 my-sm-0" type="search">
-                <i class="fas fa-search"></i>
-            </button>
         </form>
+
     
         <!-- Auth Links, only visible when no session is found -->
         <ul class="navbar-nav ml-auto" id="auth-links" hidden>
             <li class="nav-item">
-                <button id="auth-button" class="btn-sm btn-primary my-2 my-sm-0 mr-2" type="button">
+                <button id="auth-button" class="btn-sm btn-primary my-2 mr-2" type="button">
                     <i class="fas fa-sign-in-alt"></i>
                     Login
                 </button>
             </li>
             <li class="nav-item">
-                <button id="register-button" class="btn-sm btn-primary my-2 my-sm-0" type="button">
+                <button id="register-button" class="btn-sm btn-primary my-2" type="button">
                     <i class="far fa-user-circle"></i>
                     Register
                 </button>
@@ -46,13 +50,13 @@
         <!-- User Links, only visible when session is found. -->
         <ul class="navbar-nav ml-auto" id="user-links" hidden>
             <li class="nav-item">
-                <button id="profile-button" class="btn-sm btn-primary my-2 my-sm-0 mr-2" type="button">
+                <button id="profile-button" class="btn-sm btn-primary my-2 mr-2" type="button">
                     <i class="fas fa-user"></i>
                     Profile
                 </button>
             </li>
             <li class="nav-item">
-                <button id="logout-button" class="btn-sm btn-danger my-2 my-sm-0" type="button">
+                <button id="logout-button" class="btn-sm btn-danger my-2" type="button">
                     <i class="fas fa-sign-out-alt"></i>
                     Logout
                 </button>

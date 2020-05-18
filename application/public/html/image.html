@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="head-post-title">Imgur</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/121067a9e4.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
-    <!-- Axios -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -43,6 +41,11 @@
                             <br/>
                             Published <span id="post-date"></span>
                         </p>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="post-url" aria-describedby="post-url" readonly>
+                            <small id="post-url-help" class="form-text text-muted">Click the link to copy it to your clipboard.</small>
+                        </div>
                         
                         <hr/>
                         
@@ -50,11 +53,11 @@
                         <ul class="list-inline">
                             <li class="list-inline-item">
                                 <i class="fas fa-comment"></i>
-                                <span id="post-comments"></span>
+                                <strong id="post-comments"></strong> comments
                             </li>
                             <li class="list-inline-item">
                                 <i class="fas fa-eye"></i>
-                                <span id="post-views"></span>
+                                <strong id="post-views"></strong> views
                             </li>
                         </ul>
                     </div>
@@ -126,6 +129,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!-- Axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Moment.js -->
 <script src="https://momentjs.com/downloads/moment.js"></script>
 <!-- Image Functions -->
@@ -133,11 +138,28 @@
 <!-- Comment Functions -->
 <script src="../javascripts/comments.js"></script>
 
-
 <!-- Loading Navigation 'Component' -->
 <script>
     $.get('./components/navigation.html', (data) => {
         $('#navigation-bar').replaceWith(data);
+    })
+</script>
+
+<!-- Handling link copy to clipboard on click -->
+<script>
+    let _postURL = document.getElementById('post-url');
+    $("#post-url").click(() => {
+        let url = _postURL.value;
+        _postURL.select();
+        _postURL.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        _postURL.setAttribute('disabled', true);
+        _postURL.value = 'Copied to clipboard!';
+
+        setTimeout(() => {
+            _postURL.value = url;
+            _postURL.removeAttribute('disabled');
+        }, 5000);
     })
 </script>
 
@@ -152,13 +174,16 @@
         getPostData(photoID);
 
         // Getting post comments
-        getComments(photoID);
+        setTimeout(() => {
+            // Delaying this for a short period of time so that the page looks nicer when it fails to get post data.
+            getComments(photoID);
+        }, 250);
 
         // Setting up the comments input form
-        let _photoIdInput = document.getElementById('post-id');
-        _photoIdInput.value = photoID;
-
         let _form = document.getElementById('comment-form');
+        let _photoIdInput = document.getElementById('post-id');
+        
+        _photoIdInput.value = photoID;
         _form.onsubmit = (event) => {
             event.preventDefault();
             addComment(photoID)
@@ -166,7 +191,7 @@
                     getComments();
                 })
                 .catch((err) => {
-                    console.log(err);
+                    location.reload('/error?m=Internal server error');
                 });
         };
     }

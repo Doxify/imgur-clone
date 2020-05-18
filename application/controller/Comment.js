@@ -1,4 +1,5 @@
 const CommentModel  = require('../models/Comment');
+const PostModel     = require('../models/Post');
 
 const CommentController = {
     addCommentToPost: function(req, res, next) {
@@ -6,7 +7,25 @@ const CommentController = {
         let fk_userid = req.session.userID;
         let text = req.body.text;
 
-        CommentModel.addPostComment(fk_postid, fk_userid, text)
+        // Validating presence of inputs
+        if(!fk_postid || !fk_userid || !text) {
+            return res.status(200).json({
+                status: 'ERROR',
+                message: 'Form is incomplete.'
+            });
+        }
+
+        PostModel.postExists(fk_postid)
+            .then((postExists) => {
+                if(postExists) {
+                    return CommentModel.addPostComment(fk_postid, fk_userid, text);
+                } else {
+                    res.status(200).json({
+                        status: 'ERROR',
+                        message: "A post with that ID doesn't exist"
+                    });
+                }
+            })
             .then((commentWasPosted) => {
                 if(commentWasPosted) {
                     res.status(200).json({
@@ -20,7 +39,7 @@ const CommentController = {
                     });
                 }
             })
-            .then((err) => {
+            .catch((err) => {
                 next(err);
             });
     },

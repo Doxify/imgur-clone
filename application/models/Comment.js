@@ -32,7 +32,8 @@ const CommentModel = {
                 } else {
                     return Promise.resolve(false);
                 }
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 throw err;
             })
     }

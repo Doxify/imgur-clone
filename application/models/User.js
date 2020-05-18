@@ -40,7 +40,7 @@ const UserModel = {
                     data.username = result[0].username;
                     return bcrypt.compare(result[0].password, password);
                 } else {
-                    throw new UserError('User is not found.', '/login', 200);
+                    throw new UserError('Invalid username and/or password.', '/login', 200);
                 }
             })
             .then((hashMatch) => {
@@ -59,10 +59,9 @@ const UserModel = {
         let baseSQL = `
             SELECT u.username, u.created, 
             (SELECT COUNT(*) FROM posts p WHERE p.fk_userid=u.id) uploads,
-            (SELECT SUM(views) FROM posts p WHERE p.fk_userid=u.id) views
-            FROM users u JOIN posts p on p.fk_userid=u.id
+            (SELECT COALESCE(SUM(views), 0) FROM posts p WHERE p.fk_userid=u.id) views
+            FROM users u
             WHERE u.username=?
-            LIMIT 1
         `;
         return db.query(baseSQL, [username])
             .then(([result, fields]) => {

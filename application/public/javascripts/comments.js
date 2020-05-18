@@ -11,13 +11,13 @@ if(!document.cookie.includes('csid')) {
 
 function createCommentItem(data) {
     return `
-        <a href="profile?u=${data.username}" class="list-group-item list-group-item-action bg-dark text-white flex-column align-items-start">
+        <div class="list-group-item list-group-item-action bg-dark text-white flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-                <strong><p class="mb-1">${data.username}</p></strong>
+                <a href="profile?u=${data.username}"><strong>${data.username}</strong></a>
                 <small class="text-muted">${moment(new Date(data.created)).fromNow()}</small>
             </div>
             <p class="mb-1">${data.text}</p>
-        </a>
+        </div>
     `;
 };
 
