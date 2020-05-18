@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <h5 class="card-text text-muted">Post Information</h5>
                         <p class="card-text">
-                            Uploaded by <a id="post-author" href="#"></a>
+                            Uploaded by <strong><a id="post-author" href="#"></a></strong>
                             <br/>
                             Published <span id="post-date"></span>
                         </p>
@@ -145,24 +145,7 @@
     })
 </script>
 
-<!-- Handling link copy to clipboard on click -->
-<script>
-    let _postURL = document.getElementById('post-url');
-    $("#post-url").click(() => {
-        let url = _postURL.value;
-        _postURL.select();
-        _postURL.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        _postURL.setAttribute('disabled', true);
-        _postURL.value = 'Copied to clipboard!';
-
-        setTimeout(() => {
-            _postURL.value = url;
-            _postURL.removeAttribute('disabled');
-        }, 5000);
-    })
-</script>
-
+<!-- Main functions of the page -->
 <script>
     let params = new URLSearchParams(window.location.search);
 
@@ -195,7 +178,24 @@
                 });
         };
     }
+</script>
 
+<!-- Handling link copy to clipboard on click -->
+<script>
+    let _postURL = document.getElementById('post-url');
+    $("#post-url").click(() => {
+        let url = _postURL.value;
+        _postURL.select();
+        _postURL.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        _postURL.setAttribute('disabled', true);
+        _postURL.value = 'Copied to clipboard!';
+
+        setTimeout(() => {
+            _postURL.value = url;
+            _postURL.removeAttribute('disabled');
+        }, 5000);
+    })
 </script>
 
 </html>

@@ -1,9 +1,6 @@
-const debug         = require('../helpers/debug/debugHelpers');
-const UserError     = require('../helpers/errors/UserError');
 const multer        = require('multer');
 const crypto        = require('crypto');
 const PostModel     = require('../models/Post');
-const validator     = require('validator');
 
 // Configuring Multer
 const storage = multer.diskStorage({
@@ -43,13 +40,31 @@ const PostController = {
                     redirect: '/postImage'
                 });
             } else {
-                let fileUploaded = req.file.path;
-                let fileAsThumbnail = `thumbnail-${req.file.filename}`;
-                let thumbnailDestination = `${req.file.destination}/${fileAsThumbnail}`;
                 let title = req.body.title;
                 let description = req.body.description;
                 let fk_userid = req.session.userID;
+                let fileUploaded = req.file.path;
+                let fileAsThumbnail = `thumbnail-${req.file.filename}`;
+                let thumbnailDestination = `${req.file.destination}/${fileAsThumbnail}`;
                 
+                // Checking for title and description presence.
+                if(!title || !description) {
+                    return res.status(200).json({
+                        status: 'ERROR',
+                        message: 'Please include a title and description.',
+                        redirect: '/postImage'
+                    });
+                }
+
+                // Making sure the user is authenticated.
+                if(!fk_userid) {
+                    return res.status(200).json({
+                        status: 'ERROR',
+                        message: 'User is not authenticated',
+                        redirect: '/login'
+                    });
+                }
+
                 PostModel.create(title, description, fileUploaded, thumbnailDestination, fk_userid)
                     .then((postID) => {
                         if(postID) {

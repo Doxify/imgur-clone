@@ -13,7 +13,6 @@ function logOutClick() {
 
     fetch(fetchURL, fectchOptions)
         .then((data) => {
-            console.log(data);
             location.replace('/login');
         })
         .catch((err) => {

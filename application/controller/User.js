@@ -1,4 +1,3 @@
-const debug         = require('../helpers/debug/debugHelpers');
 const validator     = require('validator');
 const UserError     = require('../helpers/errors/UserError');
 const UserModel     = require('../models/User');
@@ -60,14 +59,14 @@ const UserController = {
                 if(usernameDoesNotExist) {
                     return UserModel.emailExists(email);
                 } else {
-                    throw new UserError('Username and/or email is not unique.', '/register', 200);
+                    throw new UserError('An account with that username already exists.', '/register', 200);
                 }
             })
             .then((emailDoesNotExist) => {
                 if(emailDoesNotExist) {
                     return UserModel.create(username, email, password);
                 } else {
-                    throw new UserError('Username and/or email is not unique.', '/register', 200);
+                    throw new UserError('An account with that email already exists.', '/register', 200);
                 }
             })
             .then((userID) => {
@@ -122,7 +121,6 @@ const UserController = {
             })
             .catch((err) => {
                 if(err instanceof UserError) {
-                    debug.errorPrint(err.getMessage());
                     res.status(err.getStatus()).json({
                         status: 'ERROR',
                         message: err.getMessage(),
@@ -148,10 +146,8 @@ const UserController = {
     logout: function(req, res, next) {
         req.session.destroy((err) => {
             if(err) {
-                debug.errorPrint('Failed to destroy session.');
                 next(err);
             } else {
-                debug.successPrint('Session successfully destroyed.');
                 res.clearCookie('csid');
                 res.redirect('/login');
             }
