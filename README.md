@@ -25,3 +25,12 @@ Please follow the instructions below and fill in the information requested when 
 ## Run Instructions
 1. steps here
 2. steps here 
+
+# Extra Credit
+- Registered users can leave comments on posts.
+- Registered users have profiles that display their posts and statistics about their uploads such as total view count.
+- Each post has a dedicated view count.
+- Random quote is displayed at the top of the index page.
+- Implemented a `/terms` page.
+- Registered users can use either their email or username to login.
+- Logged out users are redirected to the page they were on before accessing the `/login` or `/register` page after successfully logging in or creating an account.
