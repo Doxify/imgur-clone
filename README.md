@@ -21,19 +21,23 @@ Please follow the instructions below and fill in the information requested when 
 
 # Build/Run Instructions
 ## Build Instructions
-1. steps here
-2. steps here
+1. Clone the project.
+2. Setup the MySQL database, `csc317db.sql` is located in `/conf`.
+3. Go into application directory via `cd /application`.
+4. Install dependencies with `npm install`.
 
 ## Run Instructions
-1. steps here
-2. steps here 
+1. Go into application directory via `cd /application`.
+2. Start the app with `npm start`.
+3. Application is now running on [localhost:3000](http://localhost:3000).
 
 # Extra Credit
 - Registered users can leave comments on posts.
 - Registered users have profiles that display their posts and statistics about their uploads such as total view count.
 - Each post has a dedicated view count.
-- Each posts has a "click to copy to clipboard" button.
+- Each posts has a "click to copy to clipboard" button for the url.
 - Random quote is displayed at the top of the index page.
 - Implemented a `/terms` page.
-- Registered users can use either their email or username to login.
 - Logged out users are redirected to the page they were on before accessing the `/login` or `/register` page after successfully logging in or creating an account.
+- Registered users can use either their email or username to login.
+
