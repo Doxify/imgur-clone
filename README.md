@@ -15,12 +15,9 @@ Please follow the instructions below and fill in the information requested when 
 | Student Email | ageorgescu@mail.sfsu.edu    |
 
 # Screenshots
-<div>
-  <img src="https://i.imgur.com/umaftnU.png" width="50%" />
-  <img src="https://i.imgur.com/SrVQVcj.png" width="50%" />
-  <img src="https://i.imgur.com/orUwatG.png" width="50%" />
-  <img src="https://i.imgur.com/YwuKVQ0.png" width="50%" />
-</div>
+<img src="https://i.imgur.com/oMYtfbx.png" />
+<img src="https://i.imgur.com/HWIvlvi.png" />
+<img src="https://i.imgur.com/xbmSLHu.png" />
 
 # Build/Run Instructions
 ## Build Instructions
