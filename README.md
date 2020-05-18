@@ -16,10 +16,10 @@ Please follow the instructions below and fill in the information requested when 
 
 # Screenshots
 <div>
-  <img src="https://i.imgur.com/Y4o3U6g.png" style="float: left; margin-right: 5px;" width="50%" />
-  <img src="https://i.imgur.com/SrVQVcj.png" style="float: left; margin-right: 5px;" width="50%" />
-  <img src="https://i.imgur.com/orUwatG.png" style="float: left; margin-right: 5px;" width="50%" />
-  <img src="https://i.imgur.com/YwuKVQ0.png" style="float: left; margin-right: 5px;" width="50%" />
+  <img src="https://i.imgur.com/umaftnU.png" width="50%" />
+  <img src="https://i.imgur.com/SrVQVcj.png" width="50%" />
+  <img src="https://i.imgur.com/orUwatG.png" width="50%" />
+  <img src="https://i.imgur.com/YwuKVQ0.png" width="50%" />
 </div>
 
 # Build/Run Instructions
