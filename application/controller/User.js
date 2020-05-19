@@ -3,6 +3,41 @@ const UserError     = require('../helpers/errors/UserError');
 const UserModel     = require('../models/User');
 
 const UserController = {
+    validateNewAccountForm: function(username, email, password, passwordConfirm) {
+        return new Promise((resolve, reject) => {
+            // Checking for username, email, and password presence.
+            if(!username || !email || !password || !passwordConfirm) {
+                reject(new UserError('Form is incomplete.', '/register', 200));
+            }
+
+            // Validate username
+            if(!validator.isLength(username, { min: 3, max: 64 })) {
+                reject(new UserError('Username must be between 3 and 64 characters.', '/register', 200));
+            } else if(!validator.isAlphanumeric(username)) {
+                reject(new UserError('Username must only contain letters and numbers. (No spaces, special characters, etc...)', '/register', 200));
+            }
+
+            // Validate email
+            if(!validator.isEmail(email)) {
+                reject(new UserError('Email field must contain a valid email address.', '/register', 200));
+            }
+
+            // Validate password
+            if(!validator.isLength(password, { min: 8, max: undefined })) {
+                reject(new UserError('Password must be at least 8 characters long.', '/register', 200));
+            } else if(validator.isAlphanumeric(password)) {
+                reject(new UserError('Password must contain at least 1 special character. (!, #, $, %, &, +, /, etc...)', '/register', 200));
+            }
+
+            // Making sure password matches passwordConfirm
+            if(password !== passwordConfirm) {
+                reject(new UserError('Passwords do not match.', '/register', 200));
+            }
+
+            // Nothing failed validation.
+            resolve();
+        });
+    },
     createUser: function(req, res, next) {
         let username = req.body.username;
         let email = req.body.email;
@@ -10,51 +45,10 @@ const UserController = {
         let passwordConfirm = req.body.passwordConfirm;
         let redirect = req.body.redirect;
 
-        // Checking for username, email, and password presence.
-        if(!username || !email || !password || !passwordConfirm) {
-            return res.status(200).json({
-                status: 'ERROR',
-                message: 'Form is incomplete.',
-                redirect: '/register'
-            });
-        }
-
-        // Validate username, email, and password
-        if(!validator.isLength(username, { min: 3, max: 64 })) {
-            return res.status(200).json({
-                status: 'ERROR',
-                message: 'Username must be between 3 and 64 characters.',
-                redirect: '/register'
-            });
-        }
-
-        if(!validator.isEmail(email)) {
-            return res.status(200).json({
-                status: 'ERROR',
-                message: 'Email field must contain a valid email address.',
-                redirect: '/register'
-            });
-        }
-
-        if(!validator.isLength(password, { min: 8, max: undefined })) {
-            return res.status(200).json({
-                status: 'ERROR',
-                message: 'Password must be at least 8 characters long.',
-                redirect: '/register'
-            });
-        }
-
-        // Making sure password matches passwordConfirm
-        if(password !== passwordConfirm) {
-            return res.status(200).json({
-                status: 'ERROR',
-                message: 'Passwords do not match.',
-                redirect: '/register'
-            });
-        }
-
-        // Data is validated, attempting to create the user.
-        UserModel.usernameExists(username)
+        this.validateNewAccountForm(username, email, password, passwordConfirm)
+            .then(() => {
+                return UserModel.usernameExists(username);
+            })
             .then((usernameDoesNotExist) => {
                 if(usernameDoesNotExist) {
                     return UserModel.emailExists(email);
