@@ -1,18 +1,8 @@
 # CSC 317 Term Project
 
-## Purpose
+The goal of this term project was to recreate an imgur-like experience. It currently supports account creation, image uploads, and comments.
 
-The purpose of this repository is to store all the code for your web application. This also includes the history of all commits made and who made them. Only code submitted on the master branch will be graded.
-
-Please follow the instructions below and fill in the information requested when prompted.
-
-## Student Information
-
-|               | Information   |
-|:-------------:|:-------------:|
-| Student Name  | Andrei Georgescu     |
-| Student ID    | 920776919       |
-| Student Email | ageorgescu@mail.sfsu.edu    |
+This website uses the MySQL, Express, and Node stack. In the future I plan on implementing React.
 
 # Screenshots
 <img src="https://i.imgur.com/oMYtfbx.png" />
@@ -31,14 +21,4 @@ Please follow the instructions below and fill in the information requested when 
 1. Go into application directory via `cd application`.
 2. Start the app with `npm start`.
 3. Application is now running on [localhost:3000](http://localhost:3000).
-
-# Extra Credit
-- Registered users can leave comments on posts.
-- Registered users have profiles that display their posts and statistics about their uploads such as total view count.
-- Each post has a dedicated view count.
-- Each posts has a "click to copy to clipboard" button for the url.
-- Random quote is displayed at the top of the index page.
-- Implemented a `/terms` page.
-- Logged out users are redirected to the page they were on before accessing the `/login` or `/register` page after successfully logging in or creating an account.
-- Registered users can use either their email or username to login.
 
