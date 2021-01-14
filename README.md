@@ -4,7 +4,6 @@ The goal of this term project was to recreate an imgur-like experience. It curre
 
 This website uses the MySQL, Express, and Node stack.
 
-# Build/Run Instructions
 ## Build Instructions
 1. Clone the project.
 2. Setup the MySQL database, `csc317db.sql` is located in `application/conf`.
