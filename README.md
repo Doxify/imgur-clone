@@ -1,8 +1,8 @@
-# CSC 317 Term Project
+# imgur-clone
 
 The goal of this term project was to recreate an imgur-like experience. It currently supports account creation, image uploads, and comments.
 
-This website uses the MySQL, Express, and Node stack. In the future I plan on implementing React.
+This website uses the MySQL, Express, and Node stack.
 
 # Screenshots
 <img src="https://i.imgur.com/oMYtfbx.png" />
