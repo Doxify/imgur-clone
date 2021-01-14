@@ -4,11 +4,6 @@ The goal of this term project was to recreate an imgur-like experience. It curre
 
 This website uses the MySQL, Express, and Node stack.
 
-# Screenshots
-<img src="https://i.imgur.com/oMYtfbx.png" />
-<img src="https://i.imgur.com/HWIvlvi.png" />
-<img src="https://i.imgur.com/xbmSLHu.png" />
-
 # Build/Run Instructions
 ## Build Instructions
 1. Clone the project.
@@ -22,3 +17,9 @@ This website uses the MySQL, Express, and Node stack.
 2. Start the app with `npm start`.
 3. Application is now running on [localhost:3000](http://localhost:3000).
 
+
+
+# Screenshots
+<img src="https://i.imgur.com/oMYtfbx.png" />
+<img src="https://i.imgur.com/HWIvlvi.png" />
+<img src="https://i.imgur.com/xbmSLHu.png" />
